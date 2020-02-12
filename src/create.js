@@ -1,18 +1,17 @@
+const { lowerCaseFirst } = require('lower-case-first');
+const { upperCaseFirst } = require('upper-case-first');
 const fs = require('fs-extra');
 const path = require('path');
 
 const pwd = process.env.PWD; // folder where command start
 
-async function replacePlaceHolders(filePath, name) {
+async function replacePlaceHolders(filePath, entityName) {
     const fileContent = await fs.readFile(filePath, 'utf8');
-    const NameFirstUpper = name[0].toUpperCase() + name.slice(1);
-    const NameFirstLower = name[0].toLowerCase() + name.slice(1);
-    const NameAllLower = name.toLowerCase();
 
     const result = fileContent
-        .replace(/'<nameOf>'/g, NameFirstLower)
-        .replace(/'<NameOf>'/g, NameFirstUpper)
-        .replace(/'<nameof>'/g, NameAllLower);
+        .replace(/'<nameOf>'/g, lowerCaseFirst(entityName))
+        .replace(/'<NameOf>'/g, upperCaseFirst(entityName))
+        .replace(/'<nameof>'/g, entityName.toLowerCase());
 
     await fs.writeFile(filePath, result, 'utf8');
 }

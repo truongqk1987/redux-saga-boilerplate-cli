@@ -102,6 +102,13 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lower-case-first@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/lower-case-first/-/lower-case-first-2.0.1.tgz#ecd03e25d9abc32aeab8d52b5fd7072772dd0ccf"
+  integrity sha512-Z5fqHsaDN4FkWtPjTkhZDBy3uD4ir9L/ooqrNzOyyruDW6nCn/05AbC9HupxEIjlIoeT4bdrtChUllcU+cNgmg==
+  dependencies:
+    tslib "^1.10.0"
+
 mk-dir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mk-dir/-/mk-dir-1.0.1.tgz#ecab7ae145d9b7504ad5dea438a07cb415ef8174"
@@ -162,10 +169,22 @@ strip-ansi@^6.0.0:
   dependencies:
     ansi-regex "^5.0.0"
 
+tslib@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
+  integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
+
 universalify@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
+
+upper-case-first@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/upper-case-first/-/upper-case-first-2.0.1.tgz#32ab436747d891cc20ab1e43d601cb4d0a7fbf4a"
+  integrity sha512-105J8XqQ+9RxW3l9gHZtgve5oaiR9TIwvmZAMAIZWRHe00T21cdvewKORTlOJf/zXW6VukuTshM+HXZNWz7N5w==
+  dependencies:
+    tslib "^1.10.0"
 
 which-module@^2.0.0:
   version "2.0.0"

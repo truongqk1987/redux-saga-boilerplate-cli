@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "fs-extra": "^8.1.0",
+    "lower-case-first": "^2.0.1",
     "mk-dir": "^1.0.1",
+    "upper-case-first": "^2.0.1",
     "yargs": "^15.1.0"
   }
 }
