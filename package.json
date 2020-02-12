@@ -1,0 +1,27 @@
+{
+  "name": "crud-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truongqk1987/redux-saga-boilerplate-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/truongqk1987/redux-saga-boilerplate-cli/issues"
+  },
+  "homepage": "https://github.com/truongqk1987/redux-saga-boilerplate-cli#readme",
+  "bin": {
+    "crud": "./index.js"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "mk-dir": "^1.0.1",
+    "yargs": "^15.1.0"
+  }
+}
