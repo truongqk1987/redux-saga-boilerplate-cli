@@ -1,13 +1,16 @@
 #!/usr/bin/env node
-const reduxSagaCreator = require('./src/create');
+const reduxSagaCreator = require('./src/redux-saga-creator');
 const yargs = require("yargs");
 const makeDir = require("mk-dir");
 
 const options = yargs
- .usage("Usage: <option> <name>")
- .option("c", { alias: "container", describe: "Container name", type: "string", demandOption: true })
+ .usage("Usage: metanet <option> <value>")
+ .command("init", "Init Redux Saga project", {}, (argv) => {
+     reduxSagaCreator.createInitFiles();
+ })
+ .option("c", { alias: "container", describe: "Container name", type: "string"})
  .option("o", { alias: "omit", describe: "Reject generate redux + saga", type: "boolean"})
- .option("e", { alias: "entity", describe: "Entity name", type: "string", demandOption: false})
+ .option("e", { alias: "entity", describe: "Entity name", type: "string"})
  .argv;
 
 const containerName = options.container;

@@ -43,7 +43,7 @@ const buildPathOfFileInContainer = async (containerName, buildFileName, fileType
         buildFileName.toLowerCase() + buildFileExtension
     );
     await fs.copy(
-        path.join(__dirname, 'templates', copyFileName),
+        path.join(__dirname, 'templates/redux-saga', copyFileName + '.tpl'),
         filePath
       );
     await replacePlaceHolders(filePath, buildFileName);
@@ -58,4 +58,7 @@ module.exports = {
             fileType
         )
     },
+    createInitFiles: async() => {
+        
+    }
 }

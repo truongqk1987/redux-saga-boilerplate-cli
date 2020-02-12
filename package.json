@@ -1,5 +1,5 @@
 {
-  "name": "crud-cli",
+  "name": "metanet-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/truongqk1987/redux-saga-boilerplate-cli#readme",
   "bin": {
-    "crud": "./index.js"
+    "metanet": "./index.js"
   },
   "dependencies": {
     "fs-extra": "^8.1.0",
