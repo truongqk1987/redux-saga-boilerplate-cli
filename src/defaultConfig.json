@@ -1,0 +1,15 @@
+{
+    "BASE_API": "http://localhost:3000",
+    "SOURCE_FOLDER": "src",
+    "CONTAINER_FOLDER": "src/containers",
+    "ENCODING": "utf-8",
+    "REQUIRED_LIBS": [],
+    "INIT_FILES": [],
+    "REDUX_SAGA_TEMPLATE_FOLDER": "redux-saga",
+    "ACTIONS_FOLDER": "actions",
+    "ACTION_FILE_EXSTENTION": "ActionCreator.js",
+    "SAGAS_FOLDER": "sagas",
+    "SAGA_FILE_EXSTENTION": "Saga.js",
+    "REDUCERS_FOLDER": "reducers",
+    "REDUCER_FILE_EXSTENTION": "Reducer.js"
+}

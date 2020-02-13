@@ -5,22 +5,14 @@ const makeDir = require("mkdirp");
 const fs = require("fs-extra");
 const path = require("path");
 
+const { loadConfig } = require("../config");
+const { setConfig } = require("../share-objects");
+const { replaceByEntityName } = require("../template-place-holders");
+
 const pwd = process.env.PWD || process.cwd(); // folder where command start
 
 const baseFolder = (containerName, config) => containerName ? path.join(
   config.CONTAINER_FOLDER, containerName) : config.SOURCE_FOLDER;
-
-async function replacePlaceHolders(filePath, entityName, config) {
-  const fileContent = await fs.readFile(filePath, config.ENCODING);
-
-  const result = fileContent
-    .replace(/'<nameOf>'/g, lowerCaseFirst(entityName))
-    .replace(/'<NameOf>'/g, upperCaseFirst(entityName))
-    .replace(/'<nameof>'/g, entityName.toLowerCase())
-    .replace(/'<NAMEOF>'/g, entityName.toUpperCase())
-    .replace(/'<BaseAPI>'/g, config.BASE_API);
-  await fs.writeFile(filePath, result, config.ENCODING);
-}
 
 const isLibExist = (libName) => {
   try {
@@ -133,22 +125,18 @@ const buildPathOfFileInContainer = async (
       fileCopyPath,
       filePath
     );
-    await replacePlaceHolders(filePath, buildFileName, config);
+    await replaceByEntityName(filePath, buildFileName, config);
   }
 };
 
 module.exports = {
-  createFiles: async (containerName, isInit, hasEntity, overrideTemplateFolderPath, defaultConfig, configFileName) => {
-    let config = {...defaultConfig}
-    if (configFileName) {
-      const outsideConfigPath = path.join(pwd, configFileName);
-      const isExistedOutsideConfig = await fileExists(outsideConfigPath)
-      if (isExistedOutsideConfig) {
-        const outsideConfig = await fs.readJson(outsideConfigPath)
-        console.log(outsideConfig);
-        config = { ...defaultConfig, ...outsideConfig}
-      }
-    }
+  createFiles: async (args) => {
+    const containerName = args["container-name"];
+    const hasEntity = args.entity;
+    const overrideTemplateFolderPath = args['override-template'];
+    
+    const config = await loadConfig(args);
+
     const folderContainerPath = path.join(pwd, baseFolder(containerName, config));
     const generateInContainerFolders = [config.ACTIONS_FOLDER, config.SAGAS_FOLDER, config.REDUCERS_FOLDER];
     const generateEntityFileType = ["action", "saga", "reducer"];

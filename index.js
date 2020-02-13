@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-const reduxSagaCreator = require("./src/redux-saga-creator");
 const yargs = require("yargs");
 
-const defaultConfig = require('./config');
+const reduxSagaCreator = require("./src/redux-saga-creator");
+
 yargs
   .command(
     "$0",
@@ -38,14 +38,6 @@ yargs
         .usage("Usage: redux-saga [container-name] [otpions] [value]");
     },
     args => {
-      const containerName = args["container-name"];
-      const isInit = args.init;
-      const hasEntity = args.entity;
-      const overrideTemplateFolderPath = args['override-template'];
-      const configFileName = args['config'];
-      if (configFileName) {
-
-      }
-      reduxSagaCreator.createFiles(containerName, isInit, hasEntity, overrideTemplateFolderPath, defaultConfig, configFileName);
+      reduxSagaCreator.createFiles(args);
     }
   ).argv;
