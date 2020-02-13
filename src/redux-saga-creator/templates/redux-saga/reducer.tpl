@@ -1,20 +1,78 @@
-export const actionType = {
-  FETCH_DATA_ASYNC: 'home/FETCH_DATA_ASYNC',
-  FETCH_DATA_SUCCESS: 'home/FETCH_DATA_SUCCESS',
-  FETCH_DATA_FAILURE: 'home/FETCH_DATA_FAILURE',
-};
+
+import {
+  FETCH_'<NAMEOF>'_SUCCESS,
+  FETCH_'<NAMEOF>'_FAILURE,
+
+  UPDATE_'<NAMEOF>'_SUCCESS,
+  UPDATE_'<NAMEOF>'_FAILURE,
+
+  DELETE_'<NAMEOF>'_SUCCESS,
+  DELETE_'<NAMEOF>'_FAILURE,
+
+  CREATE_'<NAMEOF>'_SUCCESS,
+  CREATE_'<NAMEOF>'_FAILURE
+} from "../actions/'<nameOf>'ActionCreator";
 
 const initialState = {
-  data: {},
+  
 };
 
 const '<nameOf>'Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionType.FETCH_DATA_SUCCESS: {
-      const { data } = action.payload.results;
+    case FETCH_'<NAMEOF>'_SUCCESS: {
+      const { payload } = action;
       return {
         ...state,
-        data,
+        payload,
+      };
+    }
+    case FETCH_'<NAMEOF>'_FAILURE: {
+      const { error } = action;
+      return {
+        ...state,
+        error,
+      };
+    }
+    case CREATE_'<NAMEOF>'_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        payload,
+      };
+    }
+    case CREATE_'<NAMEOF>'_FAILURE: {
+      const { error } = action;
+      return {
+        ...state,
+        error,
+      };
+    }
+    case UPDATE_'<NAMEOF>'_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        payload,
+      };
+    }
+    case UPDATE_'<NAMEOF>'_FAILURE: {
+      const { error } = action;
+      return {
+        ...state,
+        error,
+      };
+    }
+    case DELETE_'<NAMEOF>'_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        payload,
+      };
+    }
+    case DELETE_'<NAMEOF>'_FAILURE: {
+      const { error } = action;
+      return {
+        ...state,
+        error,
       };
     }
 

@@ -2,6 +2,7 @@
 const reduxSagaCreator = require("./src/redux-saga-creator");
 const yargs = require("yargs");
 
+const defaultConfig = require('./config');
 yargs
   .command(
     "$0",
@@ -12,7 +13,7 @@ yargs
     () => {}
   )
   .command(
-    "redux-saga <container-name>",
+    "redux-saga [container-name]",
     "Generate Action, Saga, Reducer in container folder",
     yargs => {
       return yargs
@@ -25,18 +26,26 @@ yargs
           describe: "Entity name",
           type: "string"
         })
-        .option("i", {
-          alias: "init",
-          describe:
-            "Init basic redux-saga files (store, root of sagas and reducers)",
-          type: "boolean"
+        .option("o", {
+          alias: "override-template",
+          describe: "Location of your folder templates to override default templates",
+          type: "string"
         })
-        .usage("Usage: redux-saga <container-name> [otpions] [value]");
+        .option("config", {
+          describe: "Location of your generator config",
+          type: "string"
+        })
+        .usage("Usage: redux-saga [container-name] [otpions] [value]");
     },
     args => {
       const containerName = args["container-name"];
       const isInit = args.init;
       const hasEntity = args.entity;
-      reduxSagaCreator.createFiles(containerName, isInit, hasEntity);
+      const overrideTemplateFolderPath = args['override-template'];
+      const configFileName = args['config'];
+      if (configFileName) {
+
+      }
+      reduxSagaCreator.createFiles(containerName, isInit, hasEntity, overrideTemplateFolderPath, defaultConfig, configFileName);
     }
   ).argv;
