@@ -1,12 +1,12 @@
 const path = require('path');
 const fs = require("fs-extra");
-const { setConfig, getCLIPath } = require('./share-objects');
+const { setConfig, getCLIPath, getArgs } = require('./share-objects');
 
 const defaultConfig = require('./defaultConfig');
 
-module.exports.loadConfig = async (args) => {
+module.exports.loadConfig = async () => {
     let config = {...defaultConfig};
-    const customConfigRelativePath = args['config'];
+    const customConfigRelativePath = getArgs()['config'];
 
     try {
         if (customConfigRelativePath) {

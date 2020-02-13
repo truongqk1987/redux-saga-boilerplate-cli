@@ -2,6 +2,7 @@
 const yargs = require("yargs");
 
 const reduxSagaCreator = require("./src/redux-saga-creator");
+const { setArgs } = require('./src/share-objects');
 
 yargs
   .command(
@@ -21,6 +22,11 @@ yargs
           describe: "Name of container",
           type: "string"
         })
+        .option("i", {
+          alias: "init",
+          describe: "Init files for Redux Saga (store, rootReducer, rootSaga)",
+          type: "boolean"
+        })
         .option("e", {
           alias: "entity",
           describe: "Entity name",
@@ -31,13 +37,15 @@ yargs
           describe: "Location of your folder templates to override default templates",
           type: "string"
         })
-        .option("config", {
+        .option("c", {
+          alias: "config",
           describe: "Location of your generator config",
           type: "string"
         })
         .usage("Usage: redux-saga [container-name] [otpions] [value]");
     },
     args => {
-      reduxSagaCreator.createFiles(args);
+      setArgs(args);
+      reduxSagaCreator.createFiles();
     }
   ).argv;

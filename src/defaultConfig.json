@@ -1,10 +1,10 @@
 {
     "BASE_API": "http://localhost:3000",
-    "SOURCE_FOLDER": "src",
+    "ROOT_FOLDER": "src",
     "CONTAINER_FOLDER": "src/containers",
     "ENCODING": "utf-8",
     "REQUIRED_LIBS": [],
-    "INIT_FILES": [],
+    "EXTEND_INIT_REDUX_SAGA_FILES": [],
     "REDUX_SAGA_TEMPLATE_FOLDER": "redux-saga",
     "ACTIONS_FOLDER": "actions",
     "ACTION_FILE_EXSTENTION": "ActionCreator.js",
