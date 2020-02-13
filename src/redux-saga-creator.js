@@ -5,18 +5,16 @@ const makeDir = require("mkdirp");
 const fs = require("fs-extra");
 const path = require("path");
 
-const { loadConfig } = require("../config");
-const { setConfig } = require("../share-objects");
-const { replaceByEntityName } = require("../template-place-holders");
-
-const pwd = process.env.PWD || process.cwd(); // folder where command start
+const { loadConfig } = require("./config");
+const { replaceByEntityName } = require("./template-place-holders");
+const { getCLIPath } = require('./share-objects');
 
 const baseFolder = (containerName, config) => containerName ? path.join(
   config.CONTAINER_FOLDER, containerName) : config.SOURCE_FOLDER;
 
 const isLibExist = (libName) => {
   try {
-    var instance = require(path.join(pwd, "node_modules", libName));
+    var instance = require(path.join(getCLIPath(), "node_modules", libName));
     return true;
   }
   catch (e) {
@@ -50,7 +48,7 @@ async function createInitFiles(overrideTemplateFolderPath, config) {
   ]
   initFiles.forEach(async (fileName) => {
     const filePath = path.join(
-      pwd,
+      getCLIPath(),
       config.SOURCE_FOLDER, fileName + '.js'
     );
     const isFileExist = await fileExists(filePath);
@@ -74,7 +72,7 @@ async function createInitFiles(overrideTemplateFolderPath, config) {
 
 const getTemplateFolderPath = (overrideTemplateFolderPath, config) => {
   if (!overrideTemplateFolderPath) return __dirname + 'templates/redux-saga'
-  return path.join(pwd, overrideTemplateFolderPath, config.REDUX_SAGA_TEMPLATE_FOLDER);
+  return path.join(getCLIPath(), overrideTemplateFolderPath, config.REDUX_SAGA_TEMPLATE_FOLDER);
 };
 
 const buildPathOfFileInContainer = async (
@@ -104,7 +102,7 @@ const buildPathOfFileInContainer = async (
 
   const { subFolder, buildFileExtension, copyFileName } = fileTypeMap[fileType];
   const filePath = path.join(
-    pwd,
+    getCLIPath(),
     baseFolder(containerName, config),
     subFolder,
     lowerCaseFirst(buildFileName) + buildFileExtension
@@ -137,7 +135,7 @@ module.exports = {
     
     const config = await loadConfig(args);
 
-    const folderContainerPath = path.join(pwd, baseFolder(containerName, config));
+    const folderContainerPath = path.join(getCLIPath(), baseFolder(containerName, config));
     const generateInContainerFolders = [config.ACTIONS_FOLDER, config.SAGAS_FOLDER, config.REDUCERS_FOLDER];
     const generateEntityFileType = ["action", "saga", "reducer"];
 

@@ -1,4 +1,6 @@
 const fs = require("fs-extra");
+const { lowerCaseFirst } = require("lower-case-first");
+const { upperCaseFirst } = require("upper-case-first");
 
 const { getConfig } = require("./share-objects");
 
