@@ -74,7 +74,8 @@ const generateReduxSagaFilesFromModelsConfig = async() => {
     containerNames.forEach((container) => {
       Object.keys(entityModelConfig[container]).forEach(entityName => {
         const entityAttributes = Object.keys(entityModelConfig[container][entityName]);
-        setArgs({...getArgs(), container, entityAttributes, activeEntity: entityModelConfig[container][entityName]});
+        const containerName = container === '<share>' ? "" : container;
+        setArgs({...getArgs(), container: containerName, entityAttributes, activeEntity: entityModelConfig[container][entityName]});
         generateReduxSagaFilesByEntityName(entityName);
       })
     })
