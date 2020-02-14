@@ -1,0 +1,17 @@
+import { put, call, takeEvery } from 'redux-saga/effects';
+import axios from 'axios';
+import { actionType } from './reducer';
+
+export function* fetchDataAsync() {
+  try {
+    const url = 'https://api.github.com';
+    const results = yield call(axios.get, url);
+    yield put({ type: actionType.FETCH_DATA_SUCCESS, payload: { results } });
+  } catch (error) {
+    yield put({ type: actionType.FETCH_DATA_FAILURE, payload: error });
+  }
+}
+
+export function* watch'<NameOf>'Sagas() {
+  yield takeEvery(actionType.FETCH_DATA_ASYNC, fetchDataAsync);
+}

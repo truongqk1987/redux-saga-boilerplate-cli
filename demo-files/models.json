@@ -1,0 +1,14 @@
+{
+    "employee": {
+        "attributes": {
+            "id": "number",
+            "title": "string",
+            "age": "number"
+        },
+        "container": "Metanet99"
+    },
+    "department": {
+        "id": "number",
+        "address": "string"
+    }
+}

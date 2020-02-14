@@ -1,15 +1,13 @@
 {
     "BASE_API": "http://localhost:3000",
-    "ROOT_FOLDER": "src",
-    "CONTAINER_FOLDER": "src/containers",
-    "ENCODING": "utf-8",
-    "REQUIRED_LIBS": [],
+    "ROOT_FOLDER_PATH": "src",
+    "ROOT_CONTAINERS_FOLDER_PATH": "src/containers",
+    "EXTEND_REDUX_SAGA_FOLDERS": [],
+    "EXTEND_REDUX_SAGA_TEMLATE_FILES": [],
     "EXTEND_INIT_REDUX_SAGA_FILES": [],
-    "REDUX_SAGA_TEMPLATE_FOLDER": "redux-saga",
-    "ACTIONS_FOLDER": "actions",
-    "ACTION_FILE_EXSTENTION": "ActionCreator.js",
-    "SAGAS_FOLDER": "sagas",
-    "SAGA_FILE_EXSTENTION": "Saga.js",
-    "REDUCERS_FOLDER": "reducers",
-    "REDUCER_FILE_EXSTENTION": "Reducer.js"
+    "EXTEND_TEMPLATE_FILE_MAP_INFO": {},
+    "ENCODING": "utf-8",
+    "EXTEND_REQUIRED_LIBS": [],
+    "CUSTOM_TEMPLATE_FOLDER_PATH": "",
+    "MODELS_CONFIG_FILE_PATH": ""
 }

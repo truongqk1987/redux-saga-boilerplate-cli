@@ -1,17 +1,13 @@
 
 const { isExistLibInNodeModules } = require('./utils');
 const { getConfig } = require('./share-objects');
-const { INIT_REDUX_SAGA_FILES } = require('./constants');
+const { DEFAULT_INIT_REDUX_SAGA_FILES, DEFAULT_REQUIRED_LIBS } = require('./constants');
 
 module.exports.loadRequiredLibs = () => {
-    const { REQUIRED_LIBS = [] } = getConfig();
+    const { EXTEND_REQUIRED_LIBS = [] } = getConfig();
     const requiredLibs = [
-      'redux',
-      'redux-thunk',
-      'redux-saga',
-      'redux-devtools-extension',
-      'axios',
-      ...REQUIRED_LIBS
+      ...DEFAULT_REQUIRED_LIBS,
+      ...EXTEND_REQUIRED_LIBS
     ];
     const uninstallLibs = requiredLibs.filter((libName) => !isExistLibInNodeModules(libName));
     const spawn = require('cross-spawn');
@@ -23,7 +19,7 @@ module.exports.loadRequiredLibs = () => {
 module.exports.getInitReduxSagaFileNames = () => {
     const { EXTEND_INIT_REDUX_SAGA_FILES = [] } = getConfig();
     return [
-        ...INIT_REDUX_SAGA_FILES,
+        ...DEFAULT_INIT_REDUX_SAGA_FILES,
         ...EXTEND_INIT_REDUX_SAGA_FILES
     ]
 }

@@ -1,20 +1,21 @@
-const { lowerCaseFirst } = require("lower-case-first");
+const isEmpty = require('lodash.isempty');
 const fileExists = require('file-exists');
-const makeDir = require("mkdirp");
-const fs = require("fs-extra");
-const path = require("path");
+const path = require('path');
 
-const { loadConfig } = require("./config");
-const { buildTemplateFilePath, copyTemplate, buildTargetFilePath } = require("./template-builder");
-const { getCLIPath, getArgs } = require('./share-objects');
+const { loadConfig, loadModelsConfig } = require("./config");
+
+const {
+  buildTemplateFilePath, copyTemplate, buildTargetFilePath,
+  getTemplateInfo,
+  makeReduxSagaFolders
+} = require("./template-builder");
+const { getArgs, getConfig, setArgs, getCLIPath } = require('./share-objects');
 const { loadRequiredLibs, getInitReduxSagaFileNames } = require('./loader');
 const {
-  TARGET_FILE_IN_ROOT_FOLDER
+  TARGET_FILE_IN_ROOT_FOLDER,
+  TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER,
+  DEFAULT_REDUX_SAGA_TEMLATE_FILES
 } = require('./constants');
-
-
-const baseFolder = (containerName, config) => containerName ? path.join(
-  config.CONTAINER_FOLDER, containerName) : config.SOURCE_FOLDER;
 
 async function initReduxSaga() {
   const isRequestInitReduxSaga = getArgs()['init'];
@@ -25,90 +26,84 @@ async function initReduxSaga() {
       copyTemplate(
         templateFilePath,
         targetFilePath,
+        fileName
       );
     })
   }
 }
 
-const getTemplateFolderPath = (overrideTemplateFolderPath, config) => {
-  if (!overrideTemplateFolderPath) return __dirname + 'templates/redux-saga'
-  return path.join(getCLIPath(), overrideTemplateFolderPath, config.REDUX_SAGA_TEMPLATE_FOLDER);
-};
-
-const buildPathOfFileInContainer = async (
-  containerName,
-  buildFileName,
-  fileType,
-  overrideTemplateFolderPath,
-  config
+const generateFileFromTemplate = async (
+  templateName,
+  buildFileName
 ) => {
-  const fileTypeMap = {
-    action: {
-      subFolder: config.ACTIONS_FOLDER,
-      buildFileExtension: config.ACTION_FILE_EXSTENTION,
-      copyFileName: "action"
-    },
-    saga: {
-      subFolder: config.SAGAS_FOLDER,
-      buildFileExtension: config.SAGA_FILE_EXSTENTION,
-      copyFileName: "saga"
-    },
-    reducer: {
-      subFolder: config.REDUCERS_FOLDER,
-      buildFileExtension: config.REDUCER_FILE_EXSTENTION,
-      copyFileName: "reducer"
-    }
-  };
 
-  const { subFolder, buildFileExtension, copyFileName } = fileTypeMap[fileType];
-  const filePath = path.join(
-    getCLIPath(),
-    baseFolder(containerName, config),
-    subFolder,
-    lowerCaseFirst(buildFileName) + buildFileExtension
-  );
+  const targetFilePath = await 
+    buildTargetFilePath(
+      buildFileName, TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER, getTemplateInfo(templateName));
   
-
-  let fileCopyPath = path.join(getTemplateFolderPath(overrideTemplateFolderPath, config), copyFileName + ".tpl");
-
-  const isFileExist = await fileExists(filePath);
-  const isFileCopyExist = await fileExists(fileCopyPath);
-
-  if (!isFileCopyExist) {
-    fileCopyPath = path.join(__dirname + '/templates/redux-saga', copyFileName + ".tpl");
-  }
-
-  copyTemplate(fileCopyPath, filePath);
+  copyTemplate(
+    buildTemplateFilePath(templateName),
+    targetFilePath,
+    templateName,
+    buildFileName
+  );
 };
+
+const generateReduxSagaFilesByEntityName = (entityName) => {
+  const { EXTEND_REDUX_SAGA_TEMLATE_FILES = [] } = getConfig();
+  const reduxSagaTemplates = [
+      ...DEFAULT_REDUX_SAGA_TEMLATE_FILES,
+      ...EXTEND_REDUX_SAGA_TEMLATE_FILES
+  ]
+  reduxSagaTemplates.forEach(templateName =>
+    generateFileFromTemplate(templateName, entityName)
+  );
+}
+
+const generateReduxSagaFiles = async () => {
+  let entityNames = getArgs().entities;
+  if (!isEmpty(entityNames)) {
+    entityNames.forEach(generateReduxSagaFilesByEntityName)
+  }
+}
+
+const generateReduxSagaFilesFromModelsConfig = async() => {
+  const entityModelConfig = getArgs().entityModelConfig;
+  let entityNames = Object.keys(entityModelConfig);
+  if (!isEmpty(entityNames)) {
+    entityNames.forEach((entityName) => {
+      const container = entityModelConfig[entityName].container;
+      const entityAttributes = entityModelConfig[entityName].attributes;
+      setArgs({...getArgs(), container, entityAttributes});
+      generateReduxSagaFilesByEntityName(entityName);
+    })
+  }
+}
+
+const initilizeGenerator = async () => {
+  await loadConfig();
+  const isExistRootFolder = await fileExists(path.join(getCLIPath(), 'package.json'));
+  
+  if (isExistRootFolder) {
+    loadRequiredLibs();
+
+    initReduxSaga();
+
+    await makeReduxSagaFolders();
+  } else {
+    console.log('Please run command from project folder!');
+  }
+}
 
 module.exports = {
   createFiles: async () => {
-    const args = getArgs();
-    const config = await loadConfig();
-
-    loadRequiredLibs();
-    initReduxSaga();
-
-    const containerName = args["container-name"];
-    const hasEntity = args.entity;
-    const overrideTemplateFolderPath = args['override-template'];
-    const folderContainerPath = path.join(getCLIPath(), baseFolder(containerName, config));
-    const generateInContainerFolders = [config.ACTIONS_FOLDER, config.SAGAS_FOLDER, config.REDUCERS_FOLDER];
-    const generateEntityFileType = ["action", "saga", "reducer"];
-
-    
-    (async () => {
-      const paths = await Promise.all(
-        generateInContainerFolders.map(folderName =>
-          makeDir(folderContainerPath + "/" + folderName)
-        )
-      );
-      if (hasEntity) {
-        const entityName = hasEntity || containerName.toLowerCase();
-        generateEntityFileType.forEach(fileType =>
-          buildPathOfFileInContainer(containerName, entityName, fileType, overrideTemplateFolderPath, config)
-        );
-      }
-    })();
+    await initilizeGenerator();
+    generateReduxSagaFiles();
   },
+
+  createFilesFromModelsConfig: async () => {
+    await initilizeGenerator();
+    await loadModelsConfig();
+    generateReduxSagaFilesFromModelsConfig();
+  }
 };

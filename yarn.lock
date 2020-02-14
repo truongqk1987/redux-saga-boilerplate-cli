@@ -121,6 +121,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.isempty@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.isempty/-/lodash.isempty-4.4.0.tgz#6f86cbedd8be4ec987be9aaf33c9684db1b31e7e"
+  integrity sha1-b4bL7di+TsmHvpqvM8loTbGzHn4=
+
 lower-case-first@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/lower-case-first/-/lower-case-first-2.0.1.tgz#ecd03e25d9abc32aeab8d52b5fd7072772dd0ccf"
