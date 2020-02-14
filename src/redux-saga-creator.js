@@ -69,13 +69,14 @@ const generateReduxSagaFiles = async () => {
 
 const generateReduxSagaFilesFromModelsConfig = async() => {
   const entityModelConfig = getArgs().entityModelConfig;
-  let entityNames = Object.keys(entityModelConfig);
-  if (!isEmpty(entityNames)) {
-    entityNames.forEach((entityName) => {
-      const container = entityModelConfig[entityName].container;
-      const entityAttributes = entityModelConfig[entityName].attributes;
-      setArgs({...getArgs(), container, entityAttributes});
-      generateReduxSagaFilesByEntityName(entityName);
+  let containerNames = Object.keys(entityModelConfig);
+  if (!isEmpty(containerNames)) {
+    containerNames.forEach((container) => {
+      Object.keys(entityModelConfig[container]).forEach(entityName => {
+        const entityAttributes = Object.keys(entityModelConfig[container][entityName]);
+        setArgs({...getArgs(), container, entityAttributes, activeEntity: entityModelConfig[container][entityName]});
+        generateReduxSagaFilesByEntityName(entityName);
+      })
     })
   }
 }

@@ -1,14 +1,21 @@
 {
-    "employee": {
-        "attributes": {
+    "<share>": {
+        "employee": {
             "id": "number",
-            "title": "string",
-            "age": "number"
-        },
-        "container": "Metanet99"
+            "name": "string"
+        }
     },
-    "department": {
-        "id": "number",
-        "address": "string"
+    "payment": {
+       "payroll": {
+            "payrollId": "number",
+            "total": "number"
+       }     
+    },
+    "training": {
+        "course": {
+            "courseId": "number",
+            "courseName": "string"
+        }
     }
+    
 }

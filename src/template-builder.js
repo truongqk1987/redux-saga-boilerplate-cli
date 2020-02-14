@@ -8,8 +8,6 @@ const makeDir = require("mkdirp");
 const { getConfig, getArgs, getCLIPath } = require("./share-objects");
 const {
   renderEntityPropTypes,
-  renderEntityAttributes,
-  renderEntityContent
 } = require('./renderer');
 
 const {
@@ -31,8 +29,6 @@ const replaceByEntityName = async (filePath, entityName) => {
       .replace(/'<NAMEOF>'/g, entityName.toUpperCase())
       .replace(/'<BaseAPI>'/g, BASE_API)
       .replace(/'<prop-types-placeholder>'/, renderEntityPropTypes(entityName))
-      .replace(/'<attributes-placeholder>'/, renderEntityAttributes(entityName))
-      .replace(/'<render-content-placeholder>'/, renderEntityContent(entityName))
 
     await fs.writeFile(filePath, result, ENCODING);
   }
