@@ -31,19 +31,19 @@ module.exports = {
     ],
     DEFAULT_TEMPLATE_FILE_MAP_INFO: {
         'action': {
-            parentFolderName: 'actions',
+            container: 'actions',
             extension: 'ActionCreator.js'
         },
         'saga': {
-            parentFolderName: 'sagas',
+            container: 'sagas',
             extension: 'Saga.js'
         },
         'reducer': {
-            parentFolderName: 'reducers',
+            container: 'reducers',
             extension: 'Reducer.js'
         },
         'entityComponent': {
-            parentFolderName: 'components',
+            container: 'components',
             extension: 'Component.js'
         }
     },

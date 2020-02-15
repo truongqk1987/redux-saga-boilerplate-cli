@@ -1,8 +1,9 @@
 const fs = require("fs-extra");
+const path = require("path");
 const fileExists = require('file-exists');
 const { lowerCaseFirst } = require("lower-case-first");
 const { upperCaseFirst } = require("upper-case-first");
-const path = require('path');
+
 const { getConfig, getArgs, getCLIPath } = require("./share-objects");
 const {
   renderEntityPropTypes,
@@ -63,18 +64,12 @@ const buildTemplateFilePath = (templateFileName) => {
             path.join(__dirname, 'templates/redux-saga', templateFileName + '.tpl');
 };
 
-const buildTargetFilePath = (fileName, type, templateInfo) => {
-  let targetFilePath = "";
-  
-  const { ROOT_FOLDER_PATH } = getConfig();
-  switch (type) {
-    case TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER:
-      const { parentFolderName, extension } = templateInfo;
-      targetFilePath = path.join(getContainerPath(), parentFolderName, lowerCaseFirst(fileName) + extension)
-      break;
-  }
-  
-  return targetFilePath
+const buildTargetFilePath = (fileName, templateInfo) => {
+  const { container: containerRelativePath = "", extension = ".js" } = templateInfo;
+  const targetContainerFilePath = containerRelativePath ?
+        path.join(getContainerPath(), containerRelativePath) :
+          path.join(getContainerPath());
+      return path.join(targetContainerFilePath, lowerCaseFirst(fileName) + extension)
 };
 
 const buildInitFilePath = (fileName, containerRalativePath) => {

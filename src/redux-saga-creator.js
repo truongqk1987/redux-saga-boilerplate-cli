@@ -1,7 +1,4 @@
-const isEmpty = require("lodash.isempty");
 const get = require("lodash.get");
-
-const { loadCLIConfig, loadModelsConfig } = require("./config");
 
 const {
   buildTemplateFilePath,
@@ -10,12 +7,14 @@ const {
   buildInitFilePath,
   getTemplateInfo
 } = require("./template-builder");
-const { getArgValue, getConfig, setArgValue } = require("./share-objects");
-const { loadRequiredLibs, getInitFilesConfig } = require("./loader");
+const { getArgValue, setArgValue } = require("./share-objects");
 const {
-  TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER,
-  DEFAULT_REDUX_SAGA_TEMLATE_FILES
-} = require("./constants");
+  loadRequiredLibs,
+  getInitFilesConfig,
+  getCRUDTemplates,
+  loadCLIConfig,
+  loadModelsConfig
+} = require("./loader");
 
 const { isRunAtRootProject } = require("./utils");
 
@@ -23,10 +22,9 @@ const { isRunAtRootProject } = require("./utils");
 async function initReduxSagaFiles() {
   const filesConfig = getInitFilesConfig();
   for (let templateFileName in filesConfig) {
-    const {
-      container: containerRelativePath,
-      targetFileName,
-    } = filesConfig[templateFileName];
+    const { container: containerRelativePath, targetFileName } = filesConfig[
+      templateFileName
+    ];
 
     const copyFilePath = await buildTemplateFilePath(templateFileName);
     const targetFilePath = await buildInitFilePath(
@@ -38,44 +36,38 @@ async function initReduxSagaFiles() {
   }
 }
 
-const generateFileFromTemplate = async (templateName, buildFileName) => {
+const generateFile = async (templateName, targetFileName) => {
   const targetFilePath = await buildTargetFilePath(
-    buildFileName,
-    TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER,
-    getTemplateInfo(templateName)
+    targetFileName,
+    getTemplateInfo(templateName) || {}
   );
 
   copyTemplate(
     buildTemplateFilePath(templateName),
     targetFilePath,
     templateName,
-    buildFileName
+    targetFileName
   );
 };
 
 const generateCRUDFiles = entityName => {
-  const { EXTEND_REDUX_SAGA_TEMLATE_FILES = [] } = getConfig();
-  const reduxSagaTemplates = [
-    ...DEFAULT_REDUX_SAGA_TEMLATE_FILES,
-    ...EXTEND_REDUX_SAGA_TEMLATE_FILES
-  ];
-  reduxSagaTemplates.forEach(templateName =>
-    generateFileFromTemplate(templateName, entityName)
+  getCRUDTemplates().forEach(templateName => 
+    generateFile(templateName, entityName)
   );
 };
 
 const generateByInput = async () => {
-  const entities = getArgValue('entities') || [];
+  const entities = getArgValue("entities") || [];
   entities.forEach(generateCRUDFiles);
 };
 
 const generateByConfig = async () => {
-  const modelsConfig = getArgValue('modelsConfig') || {};
+  const modelsConfig = getArgValue("modelsConfig") || {};
   for (let containerName in modelsConfig) {
-    setArgValue('container', containerName === "<share>" ? "" : containerName);
+    setArgValue("container", containerName === "<share>" ? "" : containerName);
     for (let entityName in modelsConfig[containerName]) {
       const entityAttrs = get(modelsConfig, [containerName, entityName], {});
-      setArgValue('entityAttrs', entityAttrs);
+      setArgValue("entityAttrs", entityAttrs);
       generateCRUDFiles(entityName);
     }
   }
