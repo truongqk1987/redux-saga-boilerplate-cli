@@ -29,7 +29,7 @@ yargs
     },
     args => {
       setArgs(args);
-      reduxSagaCreator.createFiles();
+      reduxSagaCreator.generateCRUD();
     }
   )
   .command('redux-saga-models', "Generate redux, saga files from models config",
@@ -47,7 +47,7 @@ yargs
     },
     args => {
       setArgs(args);
-      reduxSagaCreator.createFilesFromModelsConfig();
+      reduxSagaCreator.generateCRUDByConfig();
     }
   )
   .argv;

@@ -1,6 +1,7 @@
 const isEmpty = require("lodash.isempty");
+const get = require("lodash.get");
 
-const { loadMetanetCLIConfig, loadModelsConfig } = require("./config");
+const { loadCLIConfig, loadModelsConfig } = require("./config");
 
 const {
   buildTemplateFilePath,
@@ -9,7 +10,7 @@ const {
   buildInitFilePath,
   getTemplateInfo
 } = require("./template-builder");
-const { getArgs, getConfig, setArgs } = require("./share-objects");
+const { getArgValue, getConfig, setArgValue } = require("./share-objects");
 const { loadRequiredLibs, getInitFilesConfig } = require("./loader");
 const {
   TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER,
@@ -32,7 +33,7 @@ async function initReduxSagaFiles() {
       targetFileName || templateFileName,
       containerRelativePath
     );
-    
+
     copyTemplate(copyFilePath, targetFilePath, templateFileName);
   }
 }
@@ -52,7 +53,7 @@ const generateFileFromTemplate = async (templateName, buildFileName) => {
   );
 };
 
-const generateReduxSagaFilesByEntityName = entityName => {
+const generateCRUDFiles = entityName => {
   const { EXTEND_REDUX_SAGA_TEMLATE_FILES = [] } = getConfig();
   const reduxSagaTemplates = [
     ...DEFAULT_REDUX_SAGA_TEMLATE_FILES,
@@ -63,53 +64,41 @@ const generateReduxSagaFilesByEntityName = entityName => {
   );
 };
 
-const generateReduxSagaFiles = async () => {
-  let entityNames = getArgs().entities;
-  if (!isEmpty(entityNames)) {
-    entityNames.forEach(generateReduxSagaFilesByEntityName);
-  }
+const generateByInput = async () => {
+  const entities = getArgValue('entities') || [];
+  entities.forEach(generateCRUDFiles);
 };
 
-const generateReduxSagaFilesFromModelsConfig = async () => {
-  const entityModelConfig = getArgs().entityModelConfig;
-  let containerNames = Object.keys(entityModelConfig);
-  if (!isEmpty(containerNames)) {
-    containerNames.forEach(container => {
-      Object.keys(entityModelConfig[container]).forEach(entityName => {
-        const entityAttributes = Object.keys(
-          entityModelConfig[container][entityName]
-        );
-        const containerName = container === "<share>" ? "" : container;
-        setArgs({
-          ...getArgs(),
-          container: containerName,
-          entityAttributes,
-          activeEntity: entityModelConfig[container][entityName]
-        });
-        generateReduxSagaFilesByEntityName(entityName);
-      });
-    });
+const generateByConfig = async () => {
+  const modelsConfig = getArgValue('modelsConfig') || {};
+  for (let containerName in modelsConfig) {
+    setArgValue('container', containerName === "<share>" ? "" : containerName);
+    for (let entityName in modelsConfig[containerName]) {
+      const entityAttrs = get(modelsConfig, [containerName, entityName], {});
+      setArgValue('entityAttrs', entityAttrs);
+      generateCRUDFiles(entityName);
+    }
   }
 };
 
 /* Load libs, make default folders, check pointer is at project folder */
 const beforeCLIRunStep = async () => {
   if (isRunAtRootProject()) {
-    await loadMetanetCLIConfig();
+    await loadCLIConfig();
     loadRequiredLibs();
     initReduxSagaFiles();
   }
 };
 
 module.exports = {
-  createFiles: async () => {
+  generateCRUD: async () => {
     await beforeCLIRunStep();
-    generateReduxSagaFiles();
+    generateByInput();
   },
 
-  createFilesFromModelsConfig: async () => {
+  generateCRUDByConfig: async () => {
     await beforeCLIRunStep();
     await loadModelsConfig();
-    generateReduxSagaFilesFromModelsConfig();
+    generateByConfig();
   }
 };

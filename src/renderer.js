@@ -1,17 +1,20 @@
 
 const { upperCaseFirst } = require("upper-case-first");
 const isEmpty = require('lodash.isempty');
-const { getArgs, getConfig, setArgs, getCLIPath } = require('./share-objects');
+const { getArgValue } = require('./share-objects');
 
 const renderEntityPropTypes = (entityName) => {
-    if (getArgs()['models']) {
+    if (getArgValue('models')) {
+        const attrsConfig = getArgValue('entityAttrs');
         
-        const attributes = getArgs().entityAttributes
-        
-        if (isEmpty(attributes)) {
+        if (isEmpty(attrsConfig)) {
             return "id: PropTypes.number"
         }
-        return attributes.map(attributeKey => `${attributeKey}: PropTypes.${getArgs().activeEntity[attributeKey]}`).join(',\n');
+        let propTypes = [];
+        for (let attr in attrsConfig) {
+            propTypes.push(`${attr}: PropTypes.${attrsConfig[attr]}`)
+        }
+        return propTypes.join(',');
     } else {
         return "id: PropTypes.number"
     }
