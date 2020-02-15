@@ -3,15 +3,12 @@ const fileExists = require('file-exists');
 const { lowerCaseFirst } = require("lower-case-first");
 const { upperCaseFirst } = require("upper-case-first");
 const path = require('path');
-const makeDir = require("mkdirp");
-
 const { getConfig, getArgs, getCLIPath } = require("./share-objects");
 const {
   renderEntityPropTypes,
 } = require('./renderer');
 
 const {
-  TARGET_FILE_IN_ROOT_FOLDER, DEFAULT_REDUX_SAGA_FOLDERS,
   TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER,
   DEFAULT_TEMPLATE_FILE_MAP_INFO
 } = require('./constants');
@@ -71,10 +68,6 @@ const buildTargetFilePath = (fileName, type, templateInfo) => {
   
   const { ROOT_FOLDER_PATH } = getConfig();
   switch (type) {
-    case TARGET_FILE_IN_ROOT_FOLDER: 
-      targetFilePath = path.join(getCLIPath(),
-        ROOT_FOLDER_PATH, fileName + '.js');
-      break;
     case TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER:
       const { parentFolderName, extension } = templateInfo;
       targetFilePath = path.join(getContainerPath(), parentFolderName, lowerCaseFirst(fileName) + extension)
@@ -84,6 +77,10 @@ const buildTargetFilePath = (fileName, type, templateInfo) => {
   return targetFilePath
 };
 
+const buildInitFilePath = (fileName, containerRalativePath) => {
+  return path.join(getCLIPath(), containerRalativePath, fileName + '.js');
+}
+
 const getContainerPath = () => {
   const { ROOT_CONTAINERS_FOLDER_PATH, ROOT_FOLDER_PATH } = getConfig();
  
@@ -91,16 +88,6 @@ const getContainerPath = () => {
   return containerName ?
     path.join(getCLIPath(), ROOT_CONTAINERS_FOLDER_PATH, containerName) :
     path.join(getCLIPath(), ROOT_FOLDER_PATH);
-}
-
-const makeReduxSagaFolders = async () => {
-  const { EXTEND_REDUX_SAGA_FOLDERS = [] } = getConfig();
-  const reduxSagaFolderNames = [...DEFAULT_REDUX_SAGA_FOLDERS, ...EXTEND_REDUX_SAGA_FOLDERS];
-  await Promise.all(
-    reduxSagaFolderNames.map(folderName =>
-      makeDir(path.join(getContainerPath(), folderName))
-    )
-  );
 }
 
 const getTemplateInfo = (templateName) => {
@@ -113,8 +100,8 @@ module.exports = {
   copyTemplate,
   replaceByEntityName, 
   buildTargetFilePath,
+  buildInitFilePath,
   buildTemplateFilePath,
   getContainerPath,
-  makeReduxSagaFolders,
   getTemplateInfo
 }

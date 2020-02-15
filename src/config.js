@@ -1,18 +1,17 @@
 const path = require('path');
 const fs = require("fs-extra");
-const { setConfig, getCLIPath, getArgs, setArgs } = require('./share-objects');
+const { setConfig, getCLIPath, getArgs, setArgs, getArgValue } = require('./share-objects');
 
 const defaultConfig = require('./defaultConfig');
 
-module.exports.loadConfig = async () => {
+module.exports.loadMetanetCLIConfig = async () => {
     let config = {...defaultConfig};
-    const customConfigRelativePath = getArgs()['config'];
+    const projectConfigPath = getArgValue('config');
 
     try {
-        if (customConfigRelativePath) {
-            const pathCustomConfigFile = path.join(getCLIPath(), customConfigRelativePath);
-            const customConfig = await fs.readJson(pathCustomConfigFile)
-            config = {...defaultConfig, ...customConfig}
+        if (projectConfigPath) {
+            const projectConfig = await fs.readJson(path.join(getCLIPath(), projectConfigPath))
+            config = {...defaultConfig, ...projectConfig}
         }
     } catch(e) {
         console.log(e);
@@ -22,20 +21,17 @@ module.exports.loadConfig = async () => {
 };
 
 module.exports.loadModelsConfig = async () => {
-    let modelsConfigFilePath;
-    let entityModelConfig = {};
-    const { MODELS_CONFIG_FILE_PATH } = getArgs()['config'] || {};
-    const inputModelsConfigFilePath = getArgs()['models'];
-    modelsConfigFilePath = inputModelsConfigFilePath || MODELS_CONFIG_FILE_PATH;
+    let modelsConfig = {};
+    const { MODELS_CONFIG_FILE_PATH } = getArgValue('config');
+    const modelsConfigPath = getArgValue('models') || MODELS_CONFIG_FILE_PATH;
+    
     try {
-        if (modelsConfigFilePath) {
-            const readModelsConfigFilePath = path.join(getCLIPath(), modelsConfigFilePath);
-            const modelsConfigContent = await fs.readJson(readModelsConfigFilePath)
-            entityModelConfig = {...modelsConfigContent}
+        if (modelsConfigPath) {
+            modelsConfig = await fs.readJson(path.join(getCLIPath(), modelsConfigPath)) || {}
         }
     } catch(e) {
         console.log(e);
     } finally {
-        setArgs({...getArgs(), entityModelConfig, isEntitiesLoadFromConfigFile: true})
+        setArgs({...getArgs(), modelsConfig})
     }
 }

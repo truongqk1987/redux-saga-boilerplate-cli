@@ -15,11 +15,6 @@ yargs
         describe: "Name of container",
         type: "string"
       })
-      .option("i", {
-        alias: "init",
-        describe: "Init files for Redux Saga (store, rootReducer, rootSaga)",
-        type: "boolean"
-      })
       .option("e", {
         alias: "entities",
         describe: "Entity name",
@@ -43,11 +38,6 @@ yargs
         alias: 'models',
         describe: "Location of model file",
         type: "string"
-      })
-      .option("i", {
-        alias: "init",
-        describe: "Init files for Redux Saga (store, rootReducer, rootSaga)",
-        type: "boolean"
       })
       .option('config', {
         describe: "Location of config file",
