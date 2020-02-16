@@ -2,33 +2,31 @@ const fs = require("fs-extra");
 const path = require("path");
 const fileExists = require('file-exists');
 const { lowerCaseFirst } = require("lower-case-first");
-const { upperCaseFirst } = require("upper-case-first");
 
-const { getConfig, getArgs, getCLIPath } = require("./share-objects");
+const { getConfig, getCLIPath, getArgValue } = require("./share-objects");
 const {
-  renderEntityPropTypes,
+  replaceName,
+  replaceURL,
+  replaceEntityComponent
 } = require('./renderer');
 
 const {
-  TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER,
-  DEFAULT_TEMPLATE_FILE_MAP_INFO
+  DEFAULT_ROOT_PROJECT_SOURCE_PATH,
+  DEFAULT_ROOT_CONTAINERS_PATH,
+  DEFAULT_TEMPLATE_FILE_MAP_INFO,
+  DEFAULT_ENCODING,
 } = require('./constants');
 
 const replaceByEntityName = async (filePath, entityName) => {
   if (entityName) {
-    const { ENCODING, BASE_API } = getConfig();
+    const { ENCODING } = getConfig();
 
-    const fileContent = await fs.readFile(filePath, ENCODING);
+    const fileContent = await fs.readFile(filePath, ENCODING || DEFAULT_ENCODING);
+    if (fileContent) {
+      const result = replaceName(replaceURL(replaceEntityComponent(fileContent, entityName)), entityName);
 
-    const result = fileContent
-      .replace(/'<nameOf>'/g, lowerCaseFirst(entityName))
-      .replace(/'<NameOf>'/g, upperCaseFirst(entityName))
-      .replace(/'<nameof>'/g, entityName.toLowerCase())
-      .replace(/'<NAMEOF>'/g, entityName.toUpperCase())
-      .replace(/'<BaseAPI>'/g, BASE_API)
-      .replace(/'<prop-types-placeholder>'/, renderEntityPropTypes(entityName))
-
-    await fs.writeFile(filePath, result, ENCODING);
+      await fs.writeFile(filePath, result, ENCODING);
+    }
   }
 };
 
@@ -65,9 +63,9 @@ const buildTemplateFilePath = (templateFileName) => {
 };
 
 const buildTargetFilePath = (fileName, templateInfo) => {
-  const { container: containerRelativePath = "", extension = ".js" } = templateInfo;
-  const targetContainerFilePath = containerRelativePath ?
-        path.join(getContainerPath(), containerRelativePath) :
+  const { container: crudContainerPath, extension = ".js" } = templateInfo;
+  const targetContainerFilePath = crudContainerPath ?
+        path.join(getContainerPath(), crudContainerPath) :
           path.join(getContainerPath());
       return path.join(targetContainerFilePath, lowerCaseFirst(fileName) + extension)
 };
@@ -77,12 +75,12 @@ const buildInitFilePath = (fileName, containerRalativePath) => {
 }
 
 const getContainerPath = () => {
-  const { ROOT_CONTAINERS_FOLDER_PATH, ROOT_FOLDER_PATH } = getConfig();
+  const { ROOT_CONTAINERS_PATH, ROOT_PROJECT_SOURCE_PATH } = getConfig();
  
-  const containerName = getArgs()["container"];
+  const containerName = getArgValue("container");
   return containerName ?
-    path.join(getCLIPath(), ROOT_CONTAINERS_FOLDER_PATH, containerName) :
-    path.join(getCLIPath(), ROOT_FOLDER_PATH);
+    path.join(getCLIPath(), ROOT_CONTAINERS_PATH || DEFAULT_ROOT_CONTAINERS_PATH, containerName) :
+      path.join(getCLIPath(), ROOT_PROJECT_SOURCE_PATH || DEFAULT_ROOT_PROJECT_SOURCE_PATH);
 }
 
 const getTemplateInfo = (templateName) => {
@@ -92,11 +90,11 @@ const getTemplateInfo = (templateName) => {
 }
 
 module.exports = {
-  copyTemplate,
   replaceByEntityName, 
+  copyTemplate,
+  buildTemplateFilePath,
   buildTargetFilePath,
   buildInitFilePath,
-  buildTemplateFilePath,
   getContainerPath,
   getTemplateInfo
 }

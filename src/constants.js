@@ -1,8 +1,7 @@
 
 module.exports = {
-    TARGET_FILE_IN_ROOT_FOLDER: 0,
-    TARGET_FILE_IN_SPECIFIC_CONTAINER_FOLDER: 1, // src/container/<A>/actions/
-    TARGET_FILE_IN_GLOBAL_REDUX_FOLDER: 2, // src/actions, src/sagas, src/reducers
+    DEFAULT_ENCODING: "utf-8",
+    DEFAULT_BASE_API: "http://localhost:3000",
     DEFAULT_INIT_REDUX_SAGA_FILES_CONFIG: {
         'store': {
             container: 'src',
@@ -54,4 +53,6 @@ module.exports = {
         'redux-devtools-extension',
         'axios'
     ],
+    DEFAULT_ROOT_PROJECT_SOURCE_PATH: "src",
+    DEFAULT_ROOT_CONTAINERS_PATH: "src/containers"
 }
