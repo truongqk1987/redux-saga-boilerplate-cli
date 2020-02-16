@@ -32,6 +32,7 @@ module.exports = {
         'action': {
             container: 'actions',
             extension: 'ActionCreator.js'
+            // containerWithoutSpecificContainer: "src"
         },
         'saga': {
             container: 'sagas',
