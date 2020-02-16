@@ -23,7 +23,7 @@ const replaceByEntityName = async (filePath, entityName) => {
     if (fileContent) {
       //const result = replaceName(replaceURL(replaceEntityComponent(fileContent, entityName)), entityName);
       const result = ContentBuilder(entityName, fileContent)
-      .buildName().buildURL().finish();
+      .buildName().buildURL().buildEntityCompPropTypes().finish();
 
       await fs.writeFile(filePath, result, ENCODING);
     }

@@ -21,7 +21,8 @@ const ContentBuilder = (entityName, content) => {
             return this;
         },
         buildEntityCompPropTypes() {
-            _content = replaceEntityPropTypesPlaceholder(_entityName)
+            _content = replaceEntityPropTypesPlaceholder(_content, _entityName)
+            return this;
         },
         finish() { return _content } 
     }
