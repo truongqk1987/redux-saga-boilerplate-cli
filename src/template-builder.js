@@ -5,9 +5,7 @@ const { lowerCaseFirst } = require("lower-case-first");
 
 const { getConfig, getCLIPath, getArgValue } = require("./share-objects");
 const {
-  replaceName,
-  replaceURL,
-  replaceEntityComponent
+  ContentBuilder
 } = require('./renderer');
 
 const {
@@ -23,7 +21,9 @@ const replaceByEntityName = async (filePath, entityName) => {
 
     const fileContent = await fs.readFile(filePath, ENCODING || DEFAULT_ENCODING);
     if (fileContent) {
-      const result = replaceName(replaceURL(replaceEntityComponent(fileContent, entityName)), entityName);
+      //const result = replaceName(replaceURL(replaceEntityComponent(fileContent, entityName)), entityName);
+      const result = ContentBuilder(entityName, fileContent)
+      .buildName().buildURL().finish();
 
       await fs.writeFile(filePath, result, ENCODING);
     }

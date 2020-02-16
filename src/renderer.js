@@ -8,6 +8,25 @@ const {
 DEFAULT_BASE_API
 } = require('./constants');
 
+const ContentBuilder = (entityName, content) => {
+    let _content = content;
+    let _entityName = entityName;
+    return {
+        buildName() {
+            _content = replaceNamePlaceHolder(_content, _entityName);
+            return this;
+        },
+        buildURL() {
+            _content = replaceURLPlaceholder(_content);
+            return this;
+        },
+        buildEntityCompPropTypes() {
+            _content = replaceEntityPropTypesPlaceholder(_entityName)
+        },
+        finish() { return _content } 
+    }
+}
+
 const renderEntityPropTypes = (entityName) => {
     if (getArgValue('models')) {
         const attrsConfig = getArgValue('entityAttrs');
@@ -25,7 +44,7 @@ const renderEntityPropTypes = (entityName) => {
     }
 };
 
-const replaceName = (content, entityName) => {
+const replaceNamePlaceHolder = (content, entityName) => {
     return content
         .replace(/'<nameOf>'/g, lowerCaseFirst(entityName))
         .replace(/'<NameOf>'/g, upperCaseFirst(entityName))
@@ -33,17 +52,15 @@ const replaceName = (content, entityName) => {
         .replace(/'<NAMEOF>'/g, entityName.toUpperCase());
 }
 
-const replaceURL = (content) => {
+const replaceURLPlaceholder = (content) => {
     const { BASE_API } = getConfig();
     return content.replace(/'<BaseAPI>'/g, BASE_API || DEFAULT_BASE_API);
 }
 
-const replaceEntityComponent = (content, entityName) => {
+const replaceEntityPropTypesPlaceholder = (content, entityName) => {
     return content.replace(/'<prop-types-placeholder>'/, renderEntityPropTypes(entityName))
 }
 
 module.exports = {
-    replaceURL,
-    replaceName,
-    replaceEntityComponent
+    ContentBuilder
 }
