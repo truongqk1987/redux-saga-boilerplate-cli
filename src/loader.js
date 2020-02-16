@@ -14,7 +14,7 @@ const { isExistLibInNodeModules } = require("./utils");
 const {
   DEFAULT_INIT_REDUX_SAGA_FILES_CONFIG,
   DEFAULT_REQUIRED_LIBS,
-  DEFAULT_REDUX_SAGA_TEMLATE_FILES
+  DEFAULT_TEMPLATE_FILE_MAP_INFO
 } = require("./constants");
 
 module.exports.loadCLIConfig = async () => {
@@ -71,9 +71,9 @@ module.exports.getInitFilesConfig = () => {
 };
 
 module.exports.getCRUDTemplates = () => {
-  const { EXTEND_REDUX_SAGA_TEMLATE_FILES = [] } = getConfig();
+  const { EXTEND_TEMPLATE_FILE_MAP_INFO = {} } = getConfig();
   return [
-    ...DEFAULT_REDUX_SAGA_TEMLATE_FILES,
-    ...EXTEND_REDUX_SAGA_TEMLATE_FILES
+    ...Object.keys(DEFAULT_TEMPLATE_FILE_MAP_INFO),
+    ...Object.keys(EXTEND_TEMPLATE_FILE_MAP_INFO),
   ];
 };

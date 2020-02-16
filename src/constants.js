@@ -22,12 +22,6 @@ module.exports = {
         'reducers',
         'components'
     ],
-    DEFAULT_REDUX_SAGA_TEMLATE_FILES: [
-        'action',
-        'saga',
-        'reducer',
-        'entityComponent'
-    ],
     DEFAULT_TEMPLATE_FILE_MAP_INFO: {
         'action': {
             container: 'actions',
