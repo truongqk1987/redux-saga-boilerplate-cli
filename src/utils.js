@@ -1,7 +1,7 @@
 const path = require("path");
 const fileExists = require('file-exists');
 
-const { getCLIPath } = require('./share-objects');
+const { getCLIPath } = require('./global-store');
 
 module.exports.isExistLibInNodeModules = (libName) => {
   try {

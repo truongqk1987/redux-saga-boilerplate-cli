@@ -3,7 +3,7 @@ const path = require("path");
 const fileExists = require('file-exists');
 const { lowerCaseFirst } = require("lower-case-first");
 
-const { getConfig, getCLIPath, getArgValue } = require("./share-objects");
+const { getConfig, getCLIPath, getArgValue } = require("./global-store");
 const {
   ContentBuilder
 } = require('./renderer');

@@ -1,14 +1,14 @@
 const path = require('path');
 
-const { getCLIPath } = require('../share-objects');
+const { getGlobalPlop } = require('../global-store');
 
 module.exports = (plop) => [
         'generate-redux-saga-crud',
         'Generate redux saga crud files',
         {},
-        () => {
-            const generator = plop.getGenerator('generate-redux-saga-crud');
-            const promptArgs = generator.runPrompts();
-            generator.runActions(promptArgs);
+        async () => {
+            const generator = getGlobalPlop().getGenerator('redux-saga-entities-loader');
+            const promptArgs = await generator.runPrompts();
+            await generator.runActions(promptArgs);
         }
     ]

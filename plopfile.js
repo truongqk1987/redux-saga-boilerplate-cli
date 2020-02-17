@@ -1,6 +1,5 @@
 const path = require('path');
 const directoryInquirer = require('inquirer-directory');
-const fileSelectorInquirer = require('inquirer-file-selector-prompt')
 const fuzzyPathInquirer = require('inquirer-fuzzy-path');
 
 const loadGenerator = (generatorName) => {
@@ -15,5 +14,6 @@ module.exports = function (plop) {
 	plop.setPrompt('directory', directoryInquirer);
 	plop.setPrompt('fuzzy-selector', fuzzyPathInquirer)
 	// Load generators
-	loadGenerator('generate-redux-saga-crud');
+	loadGenerator('redux-saga-entities-loader');
+	loadGenerator('redux-saga-files-generator');
 };

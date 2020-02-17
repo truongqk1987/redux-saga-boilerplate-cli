@@ -3,7 +3,7 @@ const { upperCaseFirst } = require("upper-case-first");
 const { lowerCaseFirst } = require("lower-case-first");
 const isEmpty = require('lodash.isempty');
 
-const { getArgValue, getConfig } = require('./share-objects');
+const { getArgValue, getConfig } = require('./global-store');
 const {
 DEFAULT_BASE_API
 } = require('./constants');

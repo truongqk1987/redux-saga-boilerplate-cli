@@ -8,7 +8,7 @@ const {
   setArgs,
   getConfig,
   getArgValue
-} = require("./share-objects");
+} = require("./global-store");
 const defaultConfig = require("./defaultConfig");
 const { isExistLibInNodeModules } = require("./utils");
 const {

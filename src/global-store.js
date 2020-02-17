@@ -1,6 +1,7 @@
 let _config = {};
 const cliPath = process.env.PWD || process.cwd();
 let _args = {};
+let _globalPlop = {};
 
 module.exports.getConfig = () => {
     return _config;
@@ -30,10 +31,18 @@ module.exports.getArgValue = (argKey) => {
     return _args[argKey];
 }
 
-module.exports.setArgValue = (argKey, argValue) => {
-    _args[argKey] = argValue;
+module.exports.setArgValue = (item) => {
+    _args = {..._args, ...item};
 }
 
 module.exports.getCLIPath = () => {
     return cliPath;
+}
+
+module.exports.getGlobalPlop = () => {
+    return _globalPlop;
+}
+
+module.exports.setGlobalPlop = (globalPlop) => {
+    _globalPlop = globalPlop;
 }

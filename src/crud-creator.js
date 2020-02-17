@@ -7,7 +7,7 @@ const {
   buildInitFilePath,
   getTemplateInfo
 } = require("./template-builder");
-const { getArgValue, setArgValue } = require("./share-objects");
+const { getArgValue, setArgValue } = require("./global-store");
 const {
   loadRequiredLibs,
   getInitFilesConfig,
@@ -56,16 +56,16 @@ const generateCRUDFiles = entityName => {
   );
 };
 
-const generateMultipleCRUD = (entityName, attributes, containers) => {
+const generateMultipleCRUD = (entityName, entityAttrs, containers) => {
   Array.from(containers).forEach(container => {
-    setArgValue('container', container === "*" ? "" : container);
-    setArgValue('entityAttrs', attributes)
+    setArgValue({'container': container === "*" ? "" : container});
+    setArgValue({entityAttrs});
     generateCRUDFiles(entityName);
   })
 } 
 
 const generateByInput = async () => {
-  const entities = getArgValue("entities") || [];
+  const entities = getArgValue("entityNames") || [];
   entities.forEach(generateCRUDFiles);
 };
 
@@ -76,28 +76,27 @@ const generateByConfig = async () => {
       attributes: { id: "number"},
       containers: ["*"]
     });
+    console.log(entityName, attributes, containers);
     generateMultipleCRUD(entityName, attributes, containers)
   }
 };
 
 /* Load libs, make default folders, check pointer is at project folder */
-const beforeCLIRunStep = async () => {
-  if (isRunAtRootProject()) {
+const beforeGenerateCRUD = async () => {
+  if (await isRunAtRootProject()) {
     await loadCLIConfig();
     loadRequiredLibs();
-    initReduxSagaFiles();
   }
 };
 
 module.exports = {
-  generateCRUD: async () => {
+  generateCRUDByInput: async () => {
     await beforeCLIRunStep();
     generateByInput();
   },
 
   generateCRUDByConfig: async () => {
     await beforeCLIRunStep();
-    await loadModelsConfig();
     generateByConfig();
   }
 };

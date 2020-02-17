@@ -1,7 +1,7 @@
 const path = require('path');
 const copydir = require('copy-dir');
 
-const { getCLIPath } = require('../share-objects');
+const { getCLIPath } = require('../global-store');
 
 module.exports = () => [
     'create-project <project-name>',
