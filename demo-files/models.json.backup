@@ -1,0 +1,21 @@
+{
+    "<share>": {
+        "employee": {
+            "id": "number",
+            "name": "string"
+        }
+    },
+    "payment": {
+       "payroll": {
+            "payrollId": "number",
+            "total": "number"
+       }     
+    },
+    "training": {
+        "course": {
+            "courseId": "number",
+            "courseName": "string"
+        }
+    }
+    
+}

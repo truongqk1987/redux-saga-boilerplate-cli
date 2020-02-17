@@ -56,6 +56,14 @@ const generateCRUDFiles = entityName => {
   );
 };
 
+const generateMultipleCRUD = (entityName, attributes, containers) => {
+  Array.from(containers).forEach(container => {
+    setArgValue('container', container === "*" ? "" : container);
+    setArgValue('entityAttrs', attributes)
+    generateCRUDFiles(entityName);
+  })
+} 
+
 const generateByInput = async () => {
   const entities = getArgValue("entities") || [];
   entities.forEach(generateCRUDFiles);
@@ -63,13 +71,12 @@ const generateByInput = async () => {
 
 const generateByConfig = async () => {
   const modelsConfig = getArgValue("modelsConfig") || {};
-  for (let containerName in modelsConfig) {
-    setArgValue("container", containerName === "<share>" ? "" : containerName);
-    for (let entityName in modelsConfig[containerName]) {
-      const entityAttrs = get(modelsConfig, [containerName, entityName], {});
-      setArgValue("entityAttrs", entityAttrs);
-      generateCRUDFiles(entityName);
-    }
+  for (let entityName in modelsConfig) {
+    const {attributes, containers} = get(modelsConfig, [entityName], {
+      attributes: { id: "number"},
+      containers: ["*"]
+    });
+    generateMultipleCRUD(entityName, attributes, containers)
   }
 };
 

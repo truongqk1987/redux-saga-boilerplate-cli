@@ -1,10 +1,18 @@
 #!/usr/bin/env node
 const yargs = require("yargs");
-
+const copydir = require('copy-dir');
+const path = require('path');
 const reduxSagaCreator = require("./src/redux-saga-creator");
-const { setArgs } = require('./src/share-objects');
+const { setArgs, getCLIPath } = require('./src/share-objects');
+const createProjectCLIDefinition = require('./src/cli-definitions/create-project');
+const generateReduxSagaCRUDCLIDefinition = require('./src/cli-definitions/generate-redux-saga-crud');
 
+const nodePlop = require('node-plop');
+// load an instance of plop from a plopfile
+const plop = nodePlop(path.join(__dirname, 'plopfile.js'));
 yargs
+  .command(...createProjectCLIDefinition())
+  .command(...generateReduxSagaCRUDCLIDefinition(plop))
   .command(
     "redux-saga",
     "Generate redux, saga files from array model names",
@@ -51,3 +59,4 @@ yargs
     }
   )
   .argv;
+

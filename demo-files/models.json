@@ -1,21 +1,26 @@
 {
-    "<share>": {
-        "employee": {
+    "employee": {
+        "attributes": {
             "id": "number",
-            "name": "string"
-        }
+            "title": "string",
+            "age": "number"
+        },
+        "containers": [
+            "Training", "Payment"
+        ]
     },
-    "payment": {
-       "payroll": {
-            "payrollId": "number",
-            "total": "number"
-       }     
+    "department": {
+        "attributes": {
+            "id": "number",
+            "address": "string"
+        },
+        "containers": ["Location"]
     },
-    "training": {
-        "course": {
-            "courseId": "number",
-            "courseName": "string"
-        }
+    "book": {
+        "attributes": {
+            "id": "number",
+            "title": "string"
+        },
+        "containers": ["*"]
     }
-    
 }
