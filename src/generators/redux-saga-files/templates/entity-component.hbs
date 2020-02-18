@@ -1,0 +1,41 @@
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+const {{pascalCase entityName}} = (props) => {
+
+    const {
+    {{#each attributesMap}}
+        {{@key}},
+    {{/each}}
+    } = props;
+
+    // Equal componentDidMount()
+    useEffect(() => {
+        return () => {
+            // Equal componentWillUnmount()
+        }
+    }, [])
+
+    return (
+        <table>
+            <th>
+            {{#each attributesMap}}
+                <td>{{@key}}</td>
+            {{/each}}
+            </th>
+            <tbody>
+            {{#each attributesMap}}
+                <td>{{jsx-bracket @key}}</td>
+            {{/each}}
+            </tbody>
+        </table>
+    )
+}
+
+{{pascalCase entityName}}.propTypes = {
+{{#each attributesMap}}
+    {{@key}}: PropTypes.{{this}},
+{{/each}}
+};
+
+export default {{pascalCase entityName}};
