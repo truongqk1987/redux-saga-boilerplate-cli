@@ -12,7 +12,8 @@ module.exports = function (plop) {
 	_plop = plop;
 
 	plop.setPrompt('directory', directoryInquirer);
-	plop.setPrompt('fuzzy-selector', fuzzyPathInquirer)
+	plop.setPrompt('fuzzy-selector', fuzzyPathInquirer);
+
 	// Load generators
 	loadGenerator('redux-saga-entities-loader');
 	loadGenerator('redux-saga-files-generator');

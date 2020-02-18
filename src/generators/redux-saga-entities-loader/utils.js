@@ -13,14 +13,14 @@ const loadModelsConfig = async (modelsConfigPath) => {
     }
 }
 
-const buildCRUDGenArgsListByConfig = (modelsConfig) => {
+const genArgsListByConfig = (modelsConfig) => {
     const results = [];
     for (let entityName in modelsConfig) {
-        const {attributes, containers} = get(modelsConfig, [entityName], {
-          attributes: { id: "number"},
-          containers: ["*"]
+        const {attributes: attributesMap, containers} = get(modelsConfig, [entityName], {
+            attributesMap: { id: "number"},
+            containers: ["*"]
         });
-        containers.forEach(containerName => results.push({entityName, attributes, containerName})
+        containers.forEach(containerName => results.push({entityName, attributesMap, containerName})
         )
     }
     return results;
@@ -28,5 +28,5 @@ const buildCRUDGenArgsListByConfig = (modelsConfig) => {
 
 module.exports = {
     loadModelsConfig,
-    buildCRUDGenArgsListByConfig
+    genArgsListByConfig
 }

@@ -8,16 +8,17 @@ const {
     GENERATE_FROM_CONFIG_FILE_ACTION_TYPE
 } = require('./constants'); 
 
-const { buildCRUDGenArgsListByConfig } = require('./utils');
+const { genArgsListByConfig } = require('./utils');
 
 module.exports = (plop) => {
     const _plop = plop;
     plop.setActionType(GENERATE_FROM_CONFIG_FILE_ACTION_TYPE, async ({ modelsConfig }) => {
         const crudFilesGenerator = getGlobalPlop().getGenerator('redux-saga-files-generator');
         try {
-            buildCRUDGenArgsListByConfig(modelsConfig).forEach(
-                async genArgs => await crudFilesGenerator.runActions(genArgs)
-            );
+            const crudArgsList = genArgsListByConfig(modelsConfig);
+            for (let index in crudArgsList) {
+                await crudFilesGenerator.runActions(crudArgsList[index])
+            }
         } catch (error) {
             console.log(error);
         }

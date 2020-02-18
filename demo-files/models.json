@@ -6,7 +6,7 @@
             "age": "number"
         },
         "containers": [
-            "Training", "Payment"
+            "Training", "Payment", "Location"
         ]
     },
     "department": {

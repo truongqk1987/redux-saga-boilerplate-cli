@@ -1,83 +1,83 @@
 
-export const FETCH_'<NAMEOF>' = "FETCH_'<NAMEOF>'";
-export const FETCH_'<NAMEOF>'_SUCCESS = "FETCH_'<NAMEOF>'_SUCCESS";
-export const FETCH_'<NAMEOF>'_FAILURE = "FETCH_'<NAMEOF>'_FAILURE";
+export const FETCH_{{constantCase entityName}} = "FETCH_{{constantCase entityName}}";
+export const FETCH_{{constantCase entityName}}_SUCCESS = "FETCH_{{constantCase entityName}}_SUCCESS";
+export const FETCH_{{constantCase entityName}}_FAILURE = "FETCH_{{constantCase entityName}}_FAILURE";
 
-export const UPDATE_'<NAMEOF>' = "UPDATE_'<NAMEOF>'";
-export const UPDATE_'<NAMEOF>'_SUCCESS = "UPDATE_'<NAMEOF>'_SUCCESS";
-export const UPDATE_'<NAMEOF>'_FAILURE = "UPDATE_'<NAMEOF>'_FAILURE";
+export const UPDATE_{{constantCase entityName}} = "UPDATE_{{constantCase entityName}}";
+export const UPDATE_{{constantCase entityName}}_SUCCESS = "UPDATE_{{constantCase entityName}}_SUCCESS";
+export const UPDATE_{{constantCase entityName}}_FAILURE = "UPDATE_{{constantCase entityName}}_FAILURE";
 
-export const DELETE_'<NAMEOF>' = "DELETE_'<NAMEOF>'";
-export const DELETE_'<NAMEOF>'_SUCCESS = "DELETE_'<NAMEOF>'_SUCCESS";
-export const DELETE_'<NAMEOF>'_FAILURE = "DELETE_'<NAMEOF>'_FAILURE";
+export const DELETE_{{constantCase entityName}} = "DELETE_{{constantCase entityName}}";
+export const DELETE_{{constantCase entityName}}_SUCCESS = "DELETE_{{constantCase entityName}}_SUCCESS";
+export const DELETE_{{constantCase entityName}}_FAILURE = "DELETE_{{constantCase entityName}}_FAILURE";
 
-export const CREATE_'<NAMEOF>' = "CREATE_'<NAMEOF>'";
-export const CREATE_'<NAMEOF>'_SUCCESS = "CREATE_'<NAMEOF>'_SUCCESS";
-export const CREATE_'<NAMEOF>'_FAILURE = "CREATE_'<NAMEOF>'_FAILURE";
+export const CREATE_{{constantCase entityName}} = "CREATE_{{constantCase entityName}}";
+export const CREATE_{{constantCase entityName}}_SUCCESS = "CREATE_{{constantCase entityName}}_SUCCESS";
+export const CREATE_{{constantCase entityName}}_FAILURE = "CREATE_{{constantCase entityName}}_FAILURE";
 
 // FETCH
-export const fetch'<NameOf>' = async (id) => ({
-  type: FETCH_'<NAMEOF>',
+export const fetch{{pascalCase entityName}} = async (id) => ({
+  type: FETCH_{{constantCase entityName}},
   id
 })
 
-export const fetch'<NameOf>'Success = async (payload) => ({
-  type: FETCH_'<NAMEOF>'_SUCCESS,
+export const fetch{{pascalCase entityName}}Success = async (payload) => ({
+  type: FETCH_{{constantCase entityName}}_SUCCESS,
   payload
 })
 
-export const fetch'<NameOf>'Failure = async (error) => ({
-  type: FETCH_'<NAMEOF>'_FAILURE,
+export const fetch{{pascalCase entityName}}Failure = async (error) => ({
+  type: FETCH_{{constantCase entityName}}_FAILURE,
   error
 })
 
 // UPDATE
-export const update'<NameOf>' = async ({ id, data }) => ({
-  type: UPDATE_'<NAMEOF>',
+export const update{{pascalCase entityName}} = async ({ id, data }) => ({
+  type: UPDATE_{{constantCase entityName}},
   id, 
   data
 })
 
-export const update'<NameOf>'Success = async (payload) => ({
-  type: UPDATE_'<NAMEOF>'_SUCCESS,
+export const update{{pascalCase entityName}}Success = async (payload) => ({
+  type: UPDATE_{{constantCase entityName}}_SUCCESS,
   payload
 })
 
-export const update'<NameOf>'Failure = async (error) => ({
-  type: UPDATE_'<NAMEOF>'_FAILURE,
+export const update{{pascalCase entityName}}Failure = async (error) => ({
+  type: UPDATE_{{constantCase entityName}}_FAILURE,
   error
 })
 
 // DELETE
-export const delete'<NameOf>' = async (id) => ({
-  type: DELETE_'<NAMEOF>',
+export const delete{{pascalCase entityName}} = async (id) => ({
+  type: DELETE_{{constantCase entityName}},
   id
 })
 
-export const delete'<NameOf>'Success = async (payload) => ({
-  type: DELETE_'<NAMEOF>'_SUCCESS,
+export const delete{{pascalCase entityName}}Success = async (payload) => ({
+  type: DELETE_{{constantCase entityName}}_SUCCESS,
   payload
 })
 
-export const delete'<NameOf>'Failure = async (error) => ({
-  type: DELETE_'<NAMEOF>'_FAILURE,
+export const delete{{pascalCase entityName}}Failure = async (error) => ({
+  type: DELETE_{{constantCase entityName}}_FAILURE,
   error
 })
 
 // CREATE
-export const create'<NameOf>' = async ({id, data}) => ({
-  type: CREATE_'<NAMEOF>',
+export const create{{pascalCase entityName}} = async ({id, data}) => ({
+  type: CREATE_{{constantCase entityName}},
   id,
   data
 })
 
-export const create'<NameOf>'Success = async (payload) => ({
-  type: CREATE_'<NAMEOF>'_SUCCESS,
+export const create{{pascalCase entityName}}Success = async (payload) => ({
+  type: CREATE_{{constantCase entityName}}_SUCCESS,
   payload
 })
 
-export const create'<NameOf>'Failure = async (error) => ({
-  type: CREATE_'<NAMEOF>'_FAILURE,
+export const create{{pascalCase entityName}}Failure = async (error) => ({
+  type: CREATE_{{constantCase entityName}}_FAILURE,
   error
 })
 
