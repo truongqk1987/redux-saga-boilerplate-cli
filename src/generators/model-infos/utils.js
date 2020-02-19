@@ -17,10 +17,13 @@ const genArgsListByConfig = (modelsConfig) => {
     const results = [];
     for (let entityName in modelsConfig) {
         const {attributes: attributesMap, containers} = get(modelsConfig, [entityName], {
-            attributesMap: { id: "number"},
+            attributes: { id: "number"},
             containers: ["*"]
         });
-        containers.forEach(containerName => results.push({entityName, attributesMap, containerName})
+        containers.forEach(container => {
+                const containerName = container === "*" ? "" : container;
+                results.push({entityName, attributesMap, containerName})
+            }
         )
     }
     return results;

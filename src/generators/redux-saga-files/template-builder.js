@@ -1,5 +1,6 @@
 const path = require("path");
 const { lowerCaseFirst } = require("lower-case-first");
+const { upperCaseFirst } = require("upper-case-first");
 
 const { getConfig, getCLIPath, getArgValue } = require("../../global-store");
 
@@ -21,10 +22,10 @@ const buildTargetFilePath = (fileName, templateName) => {
   const templateInfo = getTemplateInfo(templateName)
   const { parentFolderName, extension = ".js" } = templateInfo;
       return parentFolderName ? path.join(
-        getContainerPath(), parentFolderName, `${lowerCaseFirst(fileName)}${extension}`)
+        getContainerPath(), parentFolderName, `${fileName}${extension}`)
         :
         path.join(
-          getContainerPath(), `${lowerCaseFirst(fileName)}${extension}`)
+          getContainerPath(), `${fileName}${extension}`)
 };
 
 const getContainerPath = () => {

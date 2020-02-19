@@ -16,7 +16,7 @@ const isNodeLibExisted = (libName) => {
   return false;
 };
 
-const addFile = (templateName, fileName = "{{entityName}}") => (
+const addFile = (templateName, fileName = "{{camelCase entityName}}") => (
   {
     path: buildTargetFilePath(fileName, templateName),
     templateFile: buildTemplateFilePath(templateName),
@@ -28,6 +28,15 @@ const addFile = (templateName, fileName = "{{entityName}}") => (
 const appendFileWithText = (templateName, pattern, template, fileName = "{{entityName}}") => {
   return {
     type: 'append',
+    path: buildTargetFilePath(fileName, templateName),
+    pattern,
+    template,
+  }
+}
+
+const modifyFileWithText = (templateName, pattern, template, fileName = "{{entityName}}") => {
+  return {
+    type: 'modify',
     path: buildTargetFilePath(fileName, templateName),
     pattern,
     template,
@@ -48,5 +57,6 @@ module.exports = {
     addFile,
     isNodeLibExisted,
     appendFileWithText,
+    modifyFileWithText,
     appendFileWithTemplate
 }
