@@ -46,7 +46,8 @@ module.exports = {
         'invariant',
         'lodash',
         'connected-react-router',
-        'axios'
+        'axios',
+        'react-router'
     ],
     DEFAULT_PROJECT_SOURCE_PATH: "src",
     DEFAULT_ROOT_CONTAINERS_PATH: "containers",

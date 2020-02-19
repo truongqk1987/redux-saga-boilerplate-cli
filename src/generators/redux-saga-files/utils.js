@@ -1,20 +1,7 @@
-const path = require("path");
-
-const { getCLIPath } = require('../../global-store');
 const {
   buildTemplateFilePath,
   buildTargetFilePath
 } = require('./template-builder')
-
-const isNodeLibExisted = (libName) => {
-  try {
-    require(path.join(getCLIPath(), "node_modules", libName));
-    return true;
-  } catch (e) {
-    console.log(e);
-  }
-  return false;
-};
 
 const addFile = (templateName, fileName = "{{camelCase entityName}}") => (
   {
@@ -55,7 +42,6 @@ const appendFileWithTemplate = (templateName, pattern, templateAppendName, fileN
 
 module.exports = {
     addFile,
-    isNodeLibExisted,
     appendFileWithText,
     modifyFileWithText,
     appendFileWithTemplate

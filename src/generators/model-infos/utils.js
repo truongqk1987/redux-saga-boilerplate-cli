@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const get = require('lodash.get');
+const { getCLIPath } = require('../../global-store');
 
 const loadModelsConfig = async (modelsConfigPath) => {
     let modelsConfig = {};
@@ -29,7 +30,18 @@ const genArgsListByConfig = (modelsConfig) => {
     return results;
 }
 
+const isNodeLibExisted = (libName) => {
+    try {
+        require(path.join(getCLIPath(), "node_modules", libName));
+        return true;
+    } catch (e) {
+        console.log(e);
+    }
+    return false;
+};
+
 module.exports = {
     loadModelsConfig,
-    genArgsListByConfig
+    genArgsListByConfig,
+    isNodeLibExisted
 }
