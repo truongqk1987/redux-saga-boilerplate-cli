@@ -24,21 +24,36 @@ module.exports = {
     ],
     DEFAULT_TEMPLATE_FILE_MAP_INFO: {
         'action': {
-            container: 'actions',
+            parentFolderName: 'actions',
             extension: 'ActionCreator.js'
-            // containerWithoutSpecificContainer: "src"
         },
         'saga': {
-            container: 'sagas',
+            parentFolderName: 'sagas',
             extension: 'Saga.js'
         },
+        'sagas-index': {
+            parentFolderName: 'sagas',
+            extension: '.js'
+        },
         'reducer': {
-            container: 'reducers',
+            parentFolderName: 'reducers',
             extension: 'Reducer.js'
         },
-        'entityComponent': {
-            container: 'components',
-            extension: 'Component.js'
+        'reducers-index': {
+            parentFolderName: 'reducers',
+            extension: '.js'
+        },
+        'entity-component': {
+            parentFolderName: 'components',
+            extension: '.js'
+        },
+        'entity-components-index': {
+            parentFolderName: 'components',
+            extension: '.js'
+        },
+        'container-component': {
+            parentFolderName: '',
+            extension: '.js'
         }
     },
     DEFAULT_REQUIRED_LIBS: [
@@ -48,6 +63,6 @@ module.exports = {
         'redux-devtools-extension',
         'axios'
     ],
-    DEFAULT_ROOT_PROJECT_SOURCE_PATH: "src",
-    DEFAULT_ROOT_CONTAINERS_PATH: "src/containers"
+    DEFAULT_PROJECT_SOURCE_PATH: "src",
+    DEFAULT_ROOT_CONTAINERS_PATH: "containers"
 }

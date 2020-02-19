@@ -8,8 +8,8 @@ const {
   setArgs,
   getConfig,
   getArgValue
-} = require("../../../global-store");
-const defaultConfig = require("./defaultConfig");
+} = require("../../global-store");
+const defaultConfig = require("../../defaultConfig.json");
 const { isExistLibInNodeModules } = require("./utils");
 const {
   DEFAULT_INIT_REDUX_SAGA_FILES_CONFIG,

@@ -12,6 +12,6 @@ export function* fetchDataAsync() {
   }
 }
 
-export function* watch'<NameOf>'Sagas() {
+export function* watch{{pascalCase entityName}}Sagas() {
   yield takeEvery(actionType.FETCH_DATA_ASYNC, fetchDataAsync);
 }
