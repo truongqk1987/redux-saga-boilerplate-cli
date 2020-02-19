@@ -1,6 +1,8 @@
-const fs = require('fs-extra');
+const copydir = require('copy-dir');
 const path = require('path');
 
+const { DEFAULT_PROJECT_SOURCE_PATH } = require('./constants');
+const { loadRequiredLibs } = require('./loader');
 const { getGlobalPlop } = require('../../global-store');
 const {
     GENERATE_FROM_USER_INPUTS_ACTION_TYPE,
@@ -25,5 +27,25 @@ module.exports = (plop) => {
     })
     plop.setActionType(GENERATE_FROM_USER_INPUTS_ACTION_TYPE, async ({ containerName, entityNames }, config, plop) => {
         
+    })
+    plop.setActionType('loadInitReduxSagaFiles', async () => {
+        console.log('Loadit');
+        // try {
+        //   const { PROJECT_SOURCE_PATH } = getConfig();
+        //   copydir.sync(
+        //       path.join(__dirname, 'redux-saga-initialization'),
+        //       path.join(getCLIPath(), PROJECT_SOURCE_PATH || DEFAULT_PROJECT_SOURCE_PATH),
+        //       { cover: false },
+        //       error => error && console.log(error)
+        //   );
+        // } catch(error) {
+        //     if (error) console.log(error);
+        // }
+      })
+    
+    plop.setActionType('installRequiredLibs', async () => {
+        console.log("Install required libs");
+        await loadRequiredLibs();
+        console.log("Finished installation.");
     })
 }

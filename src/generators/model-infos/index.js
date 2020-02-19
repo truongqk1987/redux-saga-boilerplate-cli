@@ -26,6 +26,14 @@ module.exports = plop => {
           type: GENERATE_FROM_USER_INPUTS_ACTION_TYPE
         });
       }
+      actions = [
+        ...actions,
+        {
+          type: 'loadInitReduxSagaFiles'
+        }, {
+          type: 'installRequiredLibs'
+        }
+      ]
       return actions;
     }
   });

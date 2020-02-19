@@ -10,11 +10,11 @@ const {
   getArgValue
 } = require("../../global-store");
 const defaultConfig = require("../../defaultConfig.json");
-const { isExistLibInNodeModules } = require("./utils");
+const { isExistLibInNodeModules } = require("../redux-saga-files/utils");
 const {
   DEFAULT_INIT_REDUX_SAGA_FILES_CONFIG,
   DEFAULT_REQUIRED_LIBS
-} = require("./constants");
+} = require("../redux-saga-files/constants");
 
 module.exports.loadCLIConfig = async () => {
   let config = { ...defaultConfig };
@@ -51,7 +51,7 @@ module.exports.loadModelsConfig = async () => {
   }
 };
 
-module.exports.loadRequiredLibs = () => {
+const loadRequiredLibs = () => {
   const { EXTEND_REQUIRED_LIBS = [] } = getConfig();
   const requiredLibs = [...DEFAULT_REQUIRED_LIBS, ...EXTEND_REQUIRED_LIBS];
   const uninstallLibs = requiredLibs.filter(
@@ -62,6 +62,6 @@ module.exports.loadRequiredLibs = () => {
 };
 
 module.exports = {
-  
+  loadRequiredLibs
 }
 

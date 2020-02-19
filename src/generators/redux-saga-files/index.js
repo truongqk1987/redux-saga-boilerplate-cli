@@ -1,27 +1,11 @@
-const path = require('path');
-const copydir = require('copy-dir');
+const { setArgValue } = require('../../global-store');
 
-const { setArgValue, getConfig, getCLIPath } = require('../../global-store');
-const { DEFAULT_PROJECT_SOURCE_PATH } = require('./constants');
 const { addFile, appendFileWithTemplate, appendFileWithText } = require('./utils');
 
 module.exports = plop => {
   plop.setHelper('jsx-bracket', (txt) => `{${txt}}`);
 
-  plop.setActionType('loadInitReduxSagaFiles', async () => {
-    try {
-      const { PROJECT_SOURCE_PATH } = getConfig();
-      copydir.sync(
-          path.join(__dirname, 'redux-saga-initialization'),
-          path.join(getCLIPath(), PROJECT_SOURCE_PATH || DEFAULT_PROJECT_SOURCE_PATH),
-          { cover: false },
-          error => error && console.log(error)
-      );
-      console.log('Project is ready to using now!');
-    } catch(error) {
-        if (error) console.log(error);
-    }
-  })
+  
 
   plop.setGenerator("redux-saga-files", {
     description: "Generate redux-saga files",
@@ -94,18 +78,16 @@ module.exports = plop => {
         ),
         appendFileWithTemplate(
           'container-component', 
-          /(\/\/DEFINED_ENTITY_ACTIONS_DISPATCH_PROPS)/gi,
-          'entity-actions-dispatch-props',
+          /(\/\/DEFINED_ENTITY_ACTIONS_PROPTYPES)/gi,
+          'entity-actions-proptypes',
           'index'
         ),
         appendFileWithTemplate(
           'container-component', 
-          /(\/\/DEFINED_ENTITY_ACTIONS_PROPTYPES)/gi,
-          'entity-actions-proptypes',
+          /(\/\/DEFINED_ENTITY_DISPATCH_PROPS)/gi,
+          'entity-actions-dispatch-props',
           'index'
-        ), {
-          type: 'loadInitReduxSagaFiles'
-        }
+        ),
       ]
 
       return actions
