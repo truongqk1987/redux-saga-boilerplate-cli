@@ -1,4 +1,4 @@
 {
     "BASE_API": "http://<demo-server>:1987",
-    "PROJECT_TEMPLATE_FOLDER_PATH": "project-templates"
+    "PROJECT_TEMPLATES_PATH": "project-templates"
 }

@@ -7,13 +7,14 @@ const {
   DEFAULT_PROJECT_SOURCE_PATH,
   DEFAULT_ROOT_CONTAINERS_PATH,
   DEFAULT_TEMPLATE_FILE_MAP_INFO,
+  DEFAULT_PROJECT_TEMPLATES_PATH
 } = require('./constants');
 
 const buildTemplateFilePath = (templateName) => {
   const { PROJECT_TEMPLATE_FOLDER_PATH } = getConfig();
   return PROJECT_TEMPLATE_FOLDER_PATH ?
           path.join(getCLIPath(), PROJECT_TEMPLATE_FOLDER_PATH, `${templateName}.hbs`) :
-            path.join(__dirname, 'templates', `${templateName}.hbs`);
+            path.join(__dirname, DEFAULT_PROJECT_TEMPLATES_PATH, `${templateName}.hbs`);
 };
 
 const buildTargetFilePath = (fileName, templateName) => {

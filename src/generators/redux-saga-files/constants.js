@@ -2,26 +2,6 @@
 module.exports = {
     DEFAULT_ENCODING: "utf-8",
     DEFAULT_BASE_API: "http://localhost:3000",
-    DEFAULT_INIT_REDUX_SAGA_FILES_CONFIG: {
-        'store': {
-            container: 'src',
-            targetFileName: 'my-store',
-        },
-        'rootReducer': {
-            container: 'src',
-            targetFileName: '',
-        },
-        'rootSaga': {
-            container: 'src',
-            targetFileName: '',
-        }
-    },
-    DEFAULT_REDUX_SAGA_FOLDERS: [
-        'actions',
-        'sagas',
-        'reducers',
-        'components'
-    ],
     DEFAULT_TEMPLATE_FILE_MAP_INFO: {
         'action': {
             parentFolderName: 'actions',
@@ -58,11 +38,17 @@ module.exports = {
     },
     DEFAULT_REQUIRED_LIBS: [
         'redux',
+        'react-redux',
+        'hoist-non-react-statics',
         'redux-thunk',
         'redux-saga',
         'redux-devtools-extension',
+        'invariant',
+        'lodash',
+        'connected-react-router',
         'axios'
     ],
     DEFAULT_PROJECT_SOURCE_PATH: "src",
-    DEFAULT_ROOT_CONTAINERS_PATH: "containers"
+    DEFAULT_ROOT_CONTAINERS_PATH: "containers",
+    DEFAULT_PROJECT_TEMPLATES_PATH: "templates",
 }

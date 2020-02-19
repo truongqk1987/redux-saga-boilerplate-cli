@@ -13,8 +13,7 @@ const defaultConfig = require("../../defaultConfig.json");
 const { isExistLibInNodeModules } = require("./utils");
 const {
   DEFAULT_INIT_REDUX_SAGA_FILES_CONFIG,
-  DEFAULT_REQUIRED_LIBS,
-  DEFAULT_TEMPLATE_FILE_MAP_INFO
+  DEFAULT_REQUIRED_LIBS
 } = require("./constants");
 
 module.exports.loadCLIConfig = async () => {
@@ -62,18 +61,7 @@ module.exports.loadRequiredLibs = () => {
   spawn("yarn", ["add", ...uninstallLibs]);
 };
 
-module.exports.getInitFilesConfig = () => {
-  const { EXTEND_INIT_REDUX_SAGA_FILES_CONFIG = {} } = getConfig();
-  return {
-    ...DEFAULT_INIT_REDUX_SAGA_FILES_CONFIG,
-    ...EXTEND_INIT_REDUX_SAGA_FILES_CONFIG
-  };
-};
+module.exports = {
+  
+}
 
-module.exports.getCRUDTemplates = () => {
-  const { EXTEND_TEMPLATE_FILE_MAP_INFO = {} } = getConfig();
-  return [
-    ...Object.keys(DEFAULT_TEMPLATE_FILE_MAP_INFO),
-    ...Object.keys(EXTEND_TEMPLATE_FILE_MAP_INFO),
-  ];
-};
