@@ -9,14 +9,13 @@ const loadProjectConfig = async (projectConfigPath) => {
     let config = { ...defaultConfig };
     try {
     if (projectConfigPath) {
-        const projectConfig = await fs.readJson(
-            path.join(getCLIPath(), projectConfigPath)
-        );
-        config = { ...defaultConfig, ...projectConfig };
+        const projectConfig = await fs.readJson(projectConfigPath);
+        config = { ...config, ...projectConfig };
     }
     } catch (e) {
         console.log(e);
     } finally {
+        console.log(config);
         setConfig(config);
     }
 }
