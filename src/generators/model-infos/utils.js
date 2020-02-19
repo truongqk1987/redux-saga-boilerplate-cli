@@ -2,6 +2,24 @@ const path = require('path');
 const fs = require('fs-extra');
 const get = require('lodash.get');
 const { getCLIPath } = require('../../global-store');
+const defaultConfig = require("../../defaultConfig.json");
+
+
+const loadProjectConfig = async (projectConfigPath) => {
+    let config = { ...defaultConfig };
+    try {
+    if (projectConfigPath) {
+        const projectConfig = await fs.readJson(
+            path.join(getCLIPath(), projectConfigPath)
+        );
+        config = { ...defaultConfig, ...projectConfig };
+    }
+    } catch (e) {
+        console.log(e);
+    } finally {
+        setConfig(config);
+    }
+}
 
 const loadModelsConfig = async (modelsConfigPath) => {
     let modelsConfig = {};
@@ -43,5 +61,6 @@ const isNodeLibExisted = (libName) => {
 module.exports = {
     loadModelsConfig,
     genArgsListByConfig,
-    isNodeLibExisted
+    isNodeLibExisted,
+    loadProjectConfig
 }

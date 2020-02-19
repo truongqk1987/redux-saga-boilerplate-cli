@@ -1,7 +1,7 @@
 const copydir = require('copy-dir');
 const path = require('path');
 
-const { DEFAULT_PROJECT_SOURCE_PATH } = require('./constants');
+const { DEFAULT_PROJECT_SOURCE_PATH } = require('../redux-saga-files/constants');
 const { loadRequiredLibs } = require('./loader');
 const { getGlobalPlop, getConfig, getCLIPath } = require('../../global-store');
 const {
@@ -26,12 +26,23 @@ module.exports = (plop) => {
         
     })
     plop.setActionType(GENERATE_FROM_USER_INPUTS_ACTION_TYPE, async ({ containerName, entityNames }, config, plop) => {
+        const crudFilesGenerator = getGlobalPlop().getGenerator('redux-saga-files');
+        try {
+            for (let index in entityNames) {
+                const crudArg = {
+                    entityName: entityNames[index],
+                    containerName
+                }
+                await crudFilesGenerator.runActions(crudArg)
+            }
+        } catch (error) {
+            console.log(error);
+        }
         
     })
     plop.setActionType('loadInitReduxSagaFiles', async () => {
-        console.log('Loadit');
         try {
-          const { PROJECT_SOURCE_PATH = 'src' } = getConfig();
+          const { PROJECT_SOURCE_PATH } = getConfig();
           await copydir(
               path.join(__dirname, 'redux-saga-initialization'),
               path.join(getCLIPath(), PROJECT_SOURCE_PATH || DEFAULT_PROJECT_SOURCE_PATH),

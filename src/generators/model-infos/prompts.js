@@ -1,6 +1,6 @@
 const { getCLIPath } = require('../../global-store');
 const {GENERATE_FROM_CONFIG_FILE, GENERATE_FROM_USER_INPUTS} = require('./constants');
-const { loadModelsConfig } = require('./utils');
+const { loadModelsConfig, loadProjectConfig } = require('./utils');
 
 
 module.exports = [
@@ -15,7 +15,24 @@ module.exports = [
             name: "Generate from user's inputs",
             value: GENERATE_FROM_USER_INPUTS
         }],
-        default: GENERATE_FROM_USER_INPUTS
+        default: GENERATE_FROM_CONFIG_FILE
+    },
+    {
+        type: 'confirm',
+        name: 'useDefaultConfig',
+        message: "Do your have project config? ",
+        default: 'Y',
+    },
+    {
+        type: 'fuzzy-selector',
+        name: 'projectConfig',
+        excludePath: nodePath => nodePath.startsWith('node_modules'),
+        excludeFilter: nodePath => nodePath == '.',
+        message: "Choose your project config file: ",
+        rootPath: getCLIPath(),
+        depthLimit: 2,
+        itemType: 'file',
+        filter: loadProjectConfig
     },
     {
         type: 'fuzzy-selector',
