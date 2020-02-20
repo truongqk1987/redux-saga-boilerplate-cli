@@ -13,7 +13,6 @@ const loadProjectConfig = async (projectConfigPath) => {
     } catch (error) {
         console.log(error);
     } finally {
-        setConfig(config);
         return config;
     }
 }

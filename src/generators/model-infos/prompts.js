@@ -21,7 +21,7 @@ module.exports = [
         type: 'confirm',
         name: 'useProjectConfig',
         message: "Do your have project config? ",
-        default: 'Y',
+        default: true,
     },
     {
         type: 'fuzzy-selector',
@@ -32,10 +32,13 @@ module.exports = [
         rootPath: getCLIPath(),
         depthLimit: 2,
         itemType: 'file',
-        filter: loadProjectConfig,
         when: (answer) => {
-            return answer.useProjectConfig === 'Y';
-        }
+            console.log(answer);
+            const { useProjectConfig } = answer;
+            return useProjectConfig;
+        },
+        filter: loadProjectConfig,
+        
     },
     {
         type: 'fuzzy-selector',

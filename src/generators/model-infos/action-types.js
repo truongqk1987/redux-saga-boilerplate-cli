@@ -18,7 +18,7 @@ module.exports = (plop) => {
     const _plop = plop;
     plop.setActionType('load-default-config', async (answers) => {
         const { useProjectConfig } = answers;
-        if (useProjectConfig && useProjectConfig.toUpperCase === 'N') {
+        if (!useProjectConfig) {
             setConfig({...defaultConfig})
         }
     });

@@ -15,7 +15,12 @@ module.exports = plop => {
     prompts,
     actions: answers => {
       const { generateCRUDOption } = answers;
-      let actions = [];
+      console.log(answers);
+      let actions = [
+        {
+          type: 'load-default-config',
+        },
+      ];
       
       if (generateCRUDOption === GENERATE_FROM_CONFIG_FILE) {
         actions.push({
@@ -27,9 +32,6 @@ module.exports = plop => {
         });
       }
       actions = [
-        {
-          type: 'load-default-config',
-        },
         {
           type: 'get-project-template-filenames',
         },

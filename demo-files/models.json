@@ -21,6 +21,6 @@
             "id": "number",
             "title": "string"
         },
-        "containers": ["*"]
+        "containers": ["Library"]
     }
 }
