@@ -16,8 +16,9 @@ const {{pascalCase entityName}} = (props) => {
         }
     }, [])
 
-    return (
-        <table>
+    return [
+        <div>Entity: {{pascalCase entityName}}</div>,
+        <table border="1">
             <th>
             {{#each attributesMap}}
                 <td>{{@key}}</td>
@@ -29,7 +30,7 @@ const {{pascalCase entityName}} = (props) => {
             {{/each}}
             </tbody>
         </table>
-    )
+    ]
 }
 
 {{pascalCase entityName}}.propTypes = {
