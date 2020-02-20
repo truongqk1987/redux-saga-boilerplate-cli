@@ -12,6 +12,8 @@ This is a code generator which help developer can make a crud for entity in redu
      - *<project-config.json>*: A json file to give the config for places which files were rendered
      - *<models.json>*: A json file for define list of entity and its container
 
+![GitHub Logo](./terminal-screenshot.)
+
 ### Prerequisites
 
 You need a node.js version > 12
@@ -62,7 +64,7 @@ You need a node.js version > 12
 
 ## Authors
 
-* **Quang Khải** - *
+* **Quang Khải**: I am a front-end engineer of Metanet 
 
 ## License
 
