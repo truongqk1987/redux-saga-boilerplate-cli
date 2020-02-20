@@ -53,7 +53,13 @@ module.exports = plop => {
         appendFileWithText(
           'entity-components-index', 
           /(\/\/EXPORTED_COMPONENTS)/gi,
-          "export{ {{pascalCase entityName}} } from './{{pascalCase entityName}}';",
+          "export const {{pascalCase entityName}} = {{pascalCase entityName}}Entity;",
+          'index'
+        ),
+        appendFileWithText(
+          'entity-components-index', 
+          /(\/\/IMPORTED_COMPONENTS)/gi,
+          `import {{pascalCase entityName}}Entity from './{{pascalCase entityName}}';`,
           'index'
         )
       ]

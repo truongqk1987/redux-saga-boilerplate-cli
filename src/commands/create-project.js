@@ -13,13 +13,14 @@ module.exports = () => [
     },
     (args) => {
         try {
-            copydir.sync(
-                path.join(__dirname, 'react-boilerplate'),
-                path.join(getCLIPath(), args['project-name']),
-                { cover: false },
-                error => error && console.log(error)
-            );
-            console.log('Project is ready to using now!');
+            const spawn = require("cross-spawn");
+            const childProcess = spawn("npx", ["create-react-app", args['project-name']], {stdio: 'inherit'});
+            childProcess.on('close', function (code) {
+                if (code === 0) {
+                    console.log('Project is ready to using now!');
+                }
+            })
+            
         } catch(error) {
             if (error) console.log(error);
         }

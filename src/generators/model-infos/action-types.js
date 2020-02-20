@@ -72,7 +72,7 @@ module.exports = (plop) => {
           await copydir(
               path.join(__dirname, 'redux-saga-initialization'),
               path.join(getCLIPath(), PROJECT_SOURCE_PATH || DEFAULT_PROJECT_SOURCE_PATH),
-              { cover: false },
+              { cover: true },
               error => error && console.log(error)
           );
         } catch(error) {

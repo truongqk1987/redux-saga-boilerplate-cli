@@ -1,1 +1,1 @@
-# redux-saga-boilerplate-cli
+# Metanet-cli
