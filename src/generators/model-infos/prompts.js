@@ -60,7 +60,7 @@ module.exports = [
         when: (answers) => {
             return answers.generateCRUDOption === GENERATE_FROM_USER_INPUTS;
         },
-        default: 'Y',
+        default: true,
     },
     {
         type: 'input',
