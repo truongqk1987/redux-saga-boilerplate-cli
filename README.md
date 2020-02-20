@@ -3,7 +3,7 @@
 This is a code generator which help developer can make a crud for entity in redux-saga project easily
 
 ## References
-- [handlebars](https://handlebarsjs.com/)
+- [Handlebars](https://handlebarsjs.com/)
 - [Inquirer](https://www.npmjs.com/package/inquirer)
 - [Plop](https://plopjs.com/)
 
