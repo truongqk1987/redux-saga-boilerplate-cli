@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 
 const { DEFAULT_PROJECT_SOURCE_PATH } = require('../../constants');
 const { loadRequiredLibs } = require('./loader');
-const { getGlobalPlop, getConfig, getCLIPath, setArgValue } = require('../../global-store');
+const { getGlobalPlop, getConfig, getCLIPath, setArgValue, setConfig } = require('../../global-store');
 const {
     GENERATE_FROM_USER_INPUTS_ACTION_TYPE,
     GENERATE_FROM_CONFIG_FILE_ACTION_TYPE
@@ -41,6 +41,7 @@ module.exports = (plop) => {
     plop.setActionType(GENERATE_FROM_CONFIG_FILE_ACTION_TYPE, async ({ modelsConfig }) => {
         const crudFilesGenerator = getGlobalPlop().getGenerator('redux-saga-files');
         try {
+            
             const crudArgsList = genArgsListByConfig(modelsConfig);
             for (let index in crudArgsList) {
                 await crudFilesGenerator.runActions(crudArgsList[index])

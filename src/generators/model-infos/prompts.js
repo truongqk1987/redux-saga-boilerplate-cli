@@ -33,7 +33,6 @@ module.exports = [
         depthLimit: 2,
         itemType: 'file',
         when: (answer) => {
-            console.log(answer);
             const { useProjectConfig } = answer;
             return useProjectConfig;
         },
