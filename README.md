@@ -2,6 +2,10 @@
 
 This is a code generator which help developer can make a crud for entity in redux-saga project easily
 
+## References
+- http://github.com - automatic!
+[GitHub](http://github.com)
+
 ## Getting Started
 
 1. Install it by typing: ```npm -i g redux-saga-crud-generator```
