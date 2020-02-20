@@ -12,7 +12,7 @@ This is a code generator which help developer can make a crud for entity in redu
      - *<project-config.json>*: A json file to give the config for places which files were rendered
      - *<models.json>*: A json file for define list of entity and its container
 
-![GitHub Logo](./terminal-screenshot.)
+![Terminal Screenshot](./terminal-screenshot.png)
 
 ### Prerequisites
 
