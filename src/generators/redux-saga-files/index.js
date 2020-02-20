@@ -1,10 +1,12 @@
-const { setArgValue } = require('../../global-store');
+const path = require('path');
+const fs = require('fs-extra');
+
+const { setArgValue, getCLIPath, getConfig } = require('../../global-store');
 
 const { addFile, appendFileWithTemplate, appendFileWithText, modifyFileWithText } = require('./utils');
-
 module.exports = plop => {
   plop.setHelper('jsx-bracket', (txt) => `{${txt}}`);
-  
+
   plop.setGenerator("redux-saga-files", {
     description: "Generate redux-saga files",
     prompts: [],
@@ -103,7 +105,6 @@ module.exports = plop => {
           ),
         ]
       }
-
       return actions
     }
   });

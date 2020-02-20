@@ -3,14 +3,14 @@ const {
   buildTargetFilePath
 } = require('./template-builder')
 
-const addFile = (templateName, fileName = "{{camelCase entityName}}") => (
-  {
-    path: buildTargetFilePath(fileName, templateName),
-    templateFile: buildTemplateFilePath(templateName),
-    type: "add",
-    skipIfExists: true
+const addFile = (templateName, fileName = "{{camelCase entityName}}") => {
+  return {
+      path: buildTargetFilePath(fileName, templateName),
+      templateFile: buildTemplateFilePath(templateName),
+      type: "add",
+      skipIfExists: true
   }
-);
+}
 
 const appendFileWithText = (templateName, pattern, template, fileName = "{{entityName}}") => {
   return {

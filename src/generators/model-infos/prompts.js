@@ -19,7 +19,7 @@ module.exports = [
     },
     {
         type: 'confirm',
-        name: 'useDefaultConfig',
+        name: 'useProjectConfig',
         message: "Do your have project config? ",
         default: 'Y',
     },

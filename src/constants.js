@@ -45,9 +45,9 @@ module.exports = {
         'redux-devtools-extension',
         'invariant',
         'lodash',
+        'react-router',
         'connected-react-router',
-        'axios',
-        'react-router'
+        'axios'
     ],
     DEFAULT_PROJECT_SOURCE_PATH: "src",
     DEFAULT_ROOT_CONTAINERS_PATH: "containers",

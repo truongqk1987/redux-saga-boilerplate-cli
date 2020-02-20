@@ -1,29 +1,27 @@
 const path = require('path');
 const fs = require('fs-extra');
 const get = require('lodash.get');
-const { getCLIPath } = require('../../global-store');
+const { getCLIPath, setConfig } = require('../../global-store');
 const defaultConfig = require("../../defaultConfig.json");
 
 
 const loadProjectConfig = async (projectConfigPath) => {
     let config = { ...defaultConfig };
     try {
-    if (projectConfigPath) {
         const projectConfig = await fs.readJson(projectConfigPath);
         config = { ...config, ...projectConfig };
-    }
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     } finally {
-        console.log(config);
         setConfig(config);
+        return config;
     }
 }
 
 const loadModelsConfig = async (modelsConfigPath) => {
     let modelsConfig = {};
     try {
-        modelsConfig = await fs.readJson(path.join(modelsConfigPath))
+        modelsConfig = await fs.readJson(modelsConfigPath)
     } catch (error) {
         console.log(error);
     } finally {
@@ -52,7 +50,6 @@ const isNodeLibExisted = (libName) => {
         require(path.join(getCLIPath(), "node_modules", libName));
         return true;
     } catch (e) {
-        console.log(e);
     }
     return false;
 };

@@ -4,7 +4,7 @@ const {
 const { isNodeLibExisted } = require("./utils");
 const {
   DEFAULT_REQUIRED_LIBS
-} = require("../redux-saga-files/constants");
+} = require("../../constants");
 
 const loadRequiredLibs = async () => {
   const { EXTEND_REQUIRED_LIBS = [] } = getConfig();

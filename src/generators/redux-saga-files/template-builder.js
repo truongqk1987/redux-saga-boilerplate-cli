@@ -1,6 +1,5 @@
 const path = require("path");
-const { lowerCaseFirst } = require("lower-case-first");
-const { upperCaseFirst } = require("upper-case-first");
+const isEmpty = require('lodash.isempty');
 
 const { getConfig, getCLIPath, getArgValue } = require("../../global-store");
 
@@ -9,13 +8,22 @@ const {
   DEFAULT_ROOT_CONTAINERS_PATH,
   DEFAULT_TEMPLATE_FILE_MAP_INFO,
   DEFAULT_PROJECT_TEMPLATES_PATH
-} = require('./constants');
+} = require('../../constants');
 
 const buildTemplateFilePath = (templateName) => {
-  const { PROJECT_TEMPLATE_FOLDER_PATH } = getConfig();
-  return PROJECT_TEMPLATE_FOLDER_PATH ?
-          path.join(getCLIPath(), PROJECT_TEMPLATE_FOLDER_PATH, `${templateName}.hbs`) :
-            path.join(__dirname, DEFAULT_PROJECT_TEMPLATES_PATH, `${templateName}.hbs`);
+  const { PROJECT_TEMPLATES_PATH } = getConfig();
+  const defaultTemplatePath = path.join(__dirname, DEFAULT_PROJECT_TEMPLATES_PATH, `${templateName}.hbs`);
+  if (PROJECT_TEMPLATES_PATH) {
+    
+    const projectTemplateFilenames = getArgValue('projectTemplateFilenames');
+    
+    if (!isEmpty(projectTemplateFilenames)) {
+      if (projectTemplateFilenames.includes(templateName)) {
+        return path.join(getCLIPath(), PROJECT_TEMPLATES_PATH, `${templateName}.hbs`)
+      }
+    }
+  }
+  return defaultTemplatePath;
 };
 
 const buildTargetFilePath = (fileName, templateName) => {

@@ -1,9 +1,10 @@
 const copydir = require('copy-dir');
 const path = require('path');
+const fs = require('fs-extra');
 
-const { DEFAULT_PROJECT_SOURCE_PATH } = require('../redux-saga-files/constants');
+const { DEFAULT_PROJECT_SOURCE_PATH } = require('../../constants');
 const { loadRequiredLibs } = require('./loader');
-const { getGlobalPlop, getConfig, getCLIPath } = require('../../global-store');
+const { getGlobalPlop, getConfig, getCLIPath, setArgValue } = require('../../global-store');
 const {
     GENERATE_FROM_USER_INPUTS_ACTION_TYPE,
     GENERATE_FROM_CONFIG_FILE_ACTION_TYPE
@@ -13,6 +14,21 @@ const { genArgsListByConfig } = require('./utils');
 
 module.exports = (plop) => {
     const _plop = plop;
+    plop.setActionType('get-project-template-filenames', async(answers) => {
+        const {PROJECT_TEMPLATES_PATH} = getConfig();
+        if (PROJECT_TEMPLATES_PATH) {
+          try {
+            const templateFolderPath = path.join(getCLIPath(), PROJECT_TEMPLATES_PATH);
+            const projectTemplateFilenames = 
+                fs.readdirSync(templateFolderPath).map(item => item.replace('.hbs', ''));
+            setArgValue({projectTemplateFilenames})
+          } catch (error) {
+            console.log(error);
+          }
+          
+        }
+    })
+
     plop.setActionType(GENERATE_FROM_CONFIG_FILE_ACTION_TYPE, async ({ modelsConfig }) => {
         const crudFilesGenerator = getGlobalPlop().getGenerator('redux-saga-files');
         try {

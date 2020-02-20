@@ -27,6 +27,9 @@ module.exports = plop => {
         });
       }
       actions = [
+        {
+          type: 'get-project-template-filenames',
+        },
         ...actions,
         {
           type: 'loadInitReduxSagaFiles'
