@@ -9,11 +9,20 @@ const {
     GENERATE_FROM_USER_INPUTS_ACTION_TYPE,
     GENERATE_FROM_CONFIG_FILE_ACTION_TYPE
 } = require('./constants'); 
+const defaultConfig = require("../../defaultConfig.json");
+
 
 const { genArgsListByConfig } = require('./utils');
 
 module.exports = (plop) => {
     const _plop = plop;
+    plop.setActionType('load-default-config', async (answers) => {
+        const { useProjectConfig } = answers;
+        if (useProjectConfig && useProjectConfig.toUpperCase === 'N') {
+            setConfig({...defaultConfig})
+        }
+    });
+
     plop.setActionType('get-project-template-filenames', async(answers) => {
         const {PROJECT_TEMPLATES_PATH} = getConfig();
         if (PROJECT_TEMPLATES_PATH) {
@@ -72,5 +81,8 @@ module.exports = (plop) => {
     
     plop.setActionType('installRequiredLibs', async () => {
         await loadRequiredLibs();
+        setConfig({});
+        setArgValue({containerName: ''});
+        setArgValue({projectTemplateFilenames: []})
     })
 }

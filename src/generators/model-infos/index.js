@@ -28,6 +28,9 @@ module.exports = plop => {
       }
       actions = [
         {
+          type: 'load-default-config',
+        },
+        {
           type: 'get-project-template-filenames',
         },
         ...actions,

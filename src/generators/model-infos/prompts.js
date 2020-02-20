@@ -32,7 +32,10 @@ module.exports = [
         rootPath: getCLIPath(),
         depthLimit: 2,
         itemType: 'file',
-        filter: loadProjectConfig
+        filter: loadProjectConfig,
+        when: (answer) => {
+            return answer.useProjectConfig === 'Y';
+        }
     },
     {
         type: 'fuzzy-selector',
