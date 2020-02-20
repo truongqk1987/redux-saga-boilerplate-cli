@@ -9,8 +9,8 @@ This is a code generator which help developer can make a crud for entity in redu
 3. Type the command: **metanet generate-crud**
 4. Answer the questions
    - A small mentions: if you have your config for generator, please prepare it before run command
-     - **<project-config.json>: A json file to give the config for places which files were rendered
-     - **<models.json>: A json file for define list of entity and its container
+     - *<project-config.json>*: A json file to give the config for places which files were rendered
+     - *<models.json>*: A json file for define list of entity and its container
 
 ### Prerequisites
 
