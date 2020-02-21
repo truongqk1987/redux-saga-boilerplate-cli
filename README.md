@@ -1,4 +1,4 @@
-# Redux-saga-crud-generator
+# Redux-saga-crud-cli
 This is a code generator which help developer can make a crud for entity in redux-saga project easily
 
 ## References
@@ -10,9 +10,9 @@ This is a code generator which help developer can make a crud for entity in redu
 You need a node.js version > 12
 
 ## Getting Started
-1. Install it by typing: ```npm -i g redux-saga-crud-generator```
+1. Install it by typing: ```npm -i g redux-saga-crud-cli```
 2. You open the terminal at the project root
-3. Type the command: **metanet generate-crud**
+3. Type the command: **reduxSaga generate-crud**
 4. Answer the questions
    - A small mentions: if you have your config for generator, please prepare it before run command
      - *<project-config.json>*: A json file to give the config for places which files were rendered
