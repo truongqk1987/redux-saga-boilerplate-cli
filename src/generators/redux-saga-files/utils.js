@@ -1,14 +1,16 @@
+const path = require('path');
 const {
   buildTemplateFilePath,
   buildTargetFilePath
 } = require('./template-builder')
 
-const addFile = (templateName, fileName = "{{camelCase entityName}}") => {
+const addFile = (templateName, data) => {
   return {
-      path: buildTargetFilePath(fileName, templateName),
-      templateFile: buildTemplateFilePath(templateName),
+      path: buildTargetFilePath(templateName, data),
+      templateFile: path.join(__dirname, "templates", templateName + '.hbs'),
       type: "add",
-      skipIfExists: true
+      skipIfExists: true,
+      data
   }
 }
 

@@ -1,14 +1,10 @@
-const {
-  getConfig,
-} = require("../../global-store");
 const { isNodeLibExisted } = require("./utils");
 const {
   DEFAULT_REQUIRED_LIBS
 } = require("../../constants");
 
 const loadRequiredLibs = async () => {
-  const { EXTEND_REQUIRED_LIBS = [] } = getConfig();
-  const requiredLibs = [...DEFAULT_REQUIRED_LIBS, ...EXTEND_REQUIRED_LIBS];
+  const requiredLibs = [...DEFAULT_REQUIRED_LIBS];
   const uninstallLibs = await requiredLibs.filter(
     async libName => {
       const isInstalled = await isNodeLibExisted(libName);

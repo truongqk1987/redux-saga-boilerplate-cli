@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const {{pascalCase entityName}} = (props) => {
+const {{pascalCase entity}} = (props) => {
 
     const {
-    {{#each attributesMap}}
+    {{#each attributes}}
         {{@key}},
     {{/each}}
     } = props;
@@ -16,27 +16,26 @@ const {{pascalCase entityName}} = (props) => {
         }
     }, [])
 
-    return [
-        <div>Entity: {{pascalCase entityName}}</div>,
+    return (
         <table border="1">
             <th>
-            {{#each attributesMap}}
+            {{#each attributes}}
                 <td>{{@key}}</td>
             {{/each}}
             </th>
             <tbody>
-            {{#each attributesMap}}
+            {{#each attributes}}
                 <td>{{jsx-bracket @key}}</td>
             {{/each}}
             </tbody>
         </table>
-    ]
+    )
 }
 
-{{pascalCase entityName}}.propTypes = {
-{{#each attributesMap}}
+{{pascalCase entity}}.propTypes = {
+{{#each attributes}}
     {{@key}}: PropTypes.{{this}},
 {{/each}}
 };
 
-export default {{pascalCase entityName}};
+export default {{pascalCase entity}};

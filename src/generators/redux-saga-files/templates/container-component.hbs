@@ -6,15 +6,27 @@ import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from '../../utils/injectReducer';
 import { useInjectSaga } from '../../utils/injectSaga';
+
 import {
-  //DEFINED_ENTITY_NAME_HERE
+  {{#each entities}}
+  {{pascalCase this}}
+  {{/each}}
 } from './components';
+
 import reducers from './reducers';
 import sagas from './sagas';
 
-//DEFINED_ENTITY_ACTION_METHODS
+{{#each entities}}
+import {
+  fetch{{pascalCase this}},
+  delete{{pascalCase this}},
+  update{{pascalCase this}},
+  create{{pascalCase this}}
+} from './actions/{{camelCase this}}ActionCreator';
 
-export function {{pascalCase containerName}}Container(props) {
+{{/each}}
+
+export function {{pascalCase container}}Container(props) {
 
   useInjectReducer(reducers);
   useInjectSaga(sagas);
@@ -25,13 +37,22 @@ export function {{pascalCase containerName}}Container(props) {
 
   return (
     <Fragment>
-        {/*DEFINED_ENTITY_COMPONENT_HERE*/}
+      {{#each entities}}
+      <{{pascalCase this}} />
+      {{/each}}
     </Fragment>
   );
 }
 
 {{pascalCase containerName}}Container.propTypes = {
-    //DEFINED_ENTITY_ACTIONS_PROPTYPES
+  {{#each entities}}
+  // {{pascalCase this}}
+  onDelete{{pascalCase this}}: PropTypes.func,
+  onUpdate{{pascalCase this}}: PropTypes.func,
+  onCreate{{pascalCase this}}: PropTypes.func,
+  onFetch{{pascalCase this}}: PropTypes.func,
+
+  {{/each}}
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -40,7 +61,14 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    //DEFINED_ENTITY_DISPATCH_PROPS
+    {{#each entities}}
+    // {{pascalCase this}}
+    onDelete{{pascalCase this}}: payload => dispatch(delete{{pascalCase this}}(payload)),
+    onUpdate{{pascalCase this}}: payload => dispatch(update{{pascalCase this}}(payload)),
+    onCreate{{pascalCase this}}: payload => dispatch(create{{pascalCase this}}(payload)),
+    onFetch{{pascalCase this}}: payload => dispatch(fetch{{pascalCase this}}(payload)),
+
+    {{/each}}
   };
 }
 

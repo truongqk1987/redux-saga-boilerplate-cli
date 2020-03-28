@@ -1,5 +1,9 @@
-//IMPORTED_SAGAS
+{{#each entities}}
+import {{camelCase this}}Saga from './{{camelCase this}}Saga';`,
+{{/each}}
 
 export default {
-    //EXPORTED_SAGAS
+    {{#each entities}}
+    {{camelCase this}}: {{camelCase this}}Saga,
+    {{/each}}
 }

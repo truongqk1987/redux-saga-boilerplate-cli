@@ -1,45 +1,36 @@
 const path = require('path');
 const fs = require('fs-extra');
 const get = require('lodash.get');
-const { getCLIPath, setConfig } = require('../../global-store');
-const defaultConfig = require("../../defaultConfig.json");
+const { getCLIPath } = require('../../global-store');
 
-
-const loadProjectConfig = async (projectConfigPath) => {
-    let config = { ...defaultConfig };
+const loadModelsJSON = async (modelsJSONPath) => {
+    let modelsJSON = {};
     try {
-        const projectConfig = await fs.readJson(projectConfigPath);
-        config = { ...config, ...projectConfig };
+        modelsJSON = await fs.readJson(modelsJSONPath)
     } catch (error) {
         console.log(error);
     } finally {
-        return config;
+        return modelsJSON;
     }
 }
 
-const loadModelsConfig = async (modelsConfigPath) => {
-    let modelsConfig = {};
-    try {
-        modelsConfig = await fs.readJson(modelsConfigPath)
-    } catch (error) {
-        console.log(error);
-    } finally {
-        return modelsConfig;
-    }
-}
-
-const genArgsListByConfig = (modelsConfig) => {
-    const results = [];
-    for (let entityName in modelsConfig) {
-        const {attributes: attributesMap, containers} = get(modelsConfig, [entityName], {
-            attributes: { id: "number"},
-            containers: ["*"]
-        });
+const transformModelsJSON = (modelsJSON) => {
+    const results = {};
+    const flatModelsJSON = [];
+    for (let entity in modelsJSON) {
+        const {attributes, containers} = get(modelsJSON, [entity]);
         containers.forEach(container => {
-                const containerName = container === "*" ? "" : container;
-                results.push({entityName, attributesMap, containerName})
+            flatModelsJSON.push({entity, attributes, container})
+        })
+    }
+    for (let index in flatModelsJSON) {
+        const { entity, attributes, container } = flatModelsJSON[index];
+        results[container] = {
+            ...results[container],
+            [entity]: {
+                ...attributes
             }
-        )
+        }
     }
     return results;
 }
@@ -54,8 +45,7 @@ const isNodeLibExisted = (libName) => {
 };
 
 module.exports = {
-    loadModelsConfig,
-    genArgsListByConfig,
-    isNodeLibExisted,
-    loadProjectConfig
+    loadModelsJSON,
+    transformModelsJSON,
+    isNodeLibExisted
 }

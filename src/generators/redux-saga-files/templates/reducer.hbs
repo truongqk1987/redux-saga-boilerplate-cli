@@ -1,74 +1,74 @@
 
 import {
-  FETCH_{{constantCase entityName}}_SUCCESS,
-  FETCH_{{constantCase entityName}}_FAILURE,
+  FETCH_{{constantCase entity}}_SUCCESS,
+  FETCH_{{constantCase entity}}_FAILURE,
 
-  UPDATE_{{constantCase entityName}}_SUCCESS,
-  UPDATE_{{constantCase entityName}}_FAILURE,
+  UPDATE_{{constantCase entity}}_SUCCESS,
+  UPDATE_{{constantCase entity}}_FAILURE,
 
-  DELETE_{{constantCase entityName}}_SUCCESS,
-  DELETE_{{constantCase entityName}}_FAILURE,
+  DELETE_{{constantCase entity}}_SUCCESS,
+  DELETE_{{constantCase entity}}_FAILURE,
 
-  CREATE_{{constantCase entityName}}_SUCCESS,
-  CREATE_{{constantCase entityName}}_FAILURE
-} from "../actions/{{camelCase entityName}}ActionCreator";
+  CREATE_{{constantCase entity}}_SUCCESS,
+  CREATE_{{constantCase entity}}_FAILURE
+} from "../actions/{{camelCase entity}}ActionCreator";
 
 const initialState = {
   
 };
 
-const {{camelCase entityName}}Reducer = (state = initialState, action) => {
+const {{camelCase entity}}Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_{{constantCase entityName}}_SUCCESS: {
+    case FETCH_{{constantCase entity}}_SUCCESS: {
       const { payload } = action;
       return {
         ...state,
         payload,
       };
     }
-    case FETCH_{{constantCase entityName}}_FAILURE: {
+    case FETCH_{{constantCase entity}}_FAILURE: {
       const { error } = action;
       return {
         ...state,
         error,
       };
     }
-    case CREATE_{{constantCase entityName}}_SUCCESS: {
+    case CREATE_{{constantCase entity}}_SUCCESS: {
       const { payload } = action;
       return {
         ...state,
         payload,
       };
     }
-    case CREATE_{{constantCase entityName}}_FAILURE: {
+    case CREATE_{{constantCase entity}}_FAILURE: {
       const { error } = action;
       return {
         ...state,
         error,
       };
     }
-    case UPDATE_{{constantCase entityName}}_SUCCESS: {
+    case UPDATE_{{constantCase entity}}_SUCCESS: {
       const { payload } = action;
       return {
         ...state,
         payload,
       };
     }
-    case UPDATE_{{constantCase entityName}}_FAILURE: {
+    case UPDATE_{{constantCase entity}}_FAILURE: {
       const { error } = action;
       return {
         ...state,
         error,
       };
     }
-    case DELETE_{{constantCase entityName}}_SUCCESS: {
+    case DELETE_{{constantCase entity}}_SUCCESS: {
       const { payload } = action;
       return {
         ...state,
         payload,
       };
     }
-    case DELETE_{{constantCase entityName}}_FAILURE: {
+    case DELETE_{{constantCase entity}}_FAILURE: {
       const { error } = action;
       return {
         ...state,
@@ -81,4 +81,4 @@ const {{camelCase entityName}}Reducer = (state = initialState, action) => {
   }
 };
 
-export default {{camelCase entityName}}Reducer;
+export default {{camelCase entity}}Reducer;

@@ -3,68 +3,68 @@ import { all, takeEvery, put, call } from 'redux-saga/effects'
 import axios from 'axios';
 
 import {
-  FETCH_{{constantCase entityName}},
-  FETCH_{{constantCase entityName}}_SUCCESS,
-  FETCH_{{constantCase entityName}}_FAILURE,
+  FETCH_{{constantCase entity}},
+  FETCH_{{constantCase entity}}_SUCCESS,
+  FETCH_{{constantCase entity}}_FAILURE,
 
-  UPDATE_{{constantCase entityName}},
-  UPDATE_{{constantCase entityName}}_SUCCESS,
-  UPDATE_{{constantCase entityName}}_FAILURE,
+  UPDATE_{{constantCase entity}},
+  UPDATE_{{constantCase entity}}_SUCCESS,
+  UPDATE_{{constantCase entity}}_FAILURE,
 
-  DELETE_{{constantCase entityName}},
-  DELETE_{{constantCase entityName}}_SUCCESS,
-  DELETE_{{constantCase entityName}}_FAILURE,
+  DELETE_{{constantCase entity}},
+  DELETE_{{constantCase entity}}_SUCCESS,
+  DELETE_{{constantCase entity}}_FAILURE,
 
-  CREATE_{{constantCase entityName}},
-  CREATE_{{constantCase entityName}}_SUCCESS,
-  CREATE_{{constantCase entityName}}_FAILURE
-} from "../actions/{{camelCase entityName}}ActionCreator";
+  CREATE_{{constantCase entity}},
+  CREATE_{{constantCase entity}}_SUCCESS,
+  CREATE_{{constantCase entity}}_FAILURE
+} from "../actions/{{camelCase entity}}ActionCreator";
 
-function* fetch{{pascalCase entityName}}(action) {
+function* fetch{{pascalCase entity}}(action) {
   try {
-    const response = yield call(axios.get, "{{baseAPI}}/{{camelCase entityName}}" + action.id);
+    const response = yield call(axios.get, "{{baseAPI}}/{{camelCase entity}}" + action.id);
     const result = yield response.json();
-    yield put({ type: FETCH_{{constantCase entityName}}_SUCCESS, payload: result})
+    yield put({ type: FETCH_{{constantCase entity}}_SUCCESS, payload: result})
   } catch (error) {
-    yield put({ type: FETCH_{{constantCase entityName}}_FAILURE, error})
+    yield put({ type: FETCH_{{constantCase entity}}_FAILURE, error})
   }
 }
 
-function* delete{{pascalCase entityName}}(action) {
+function* delete{{pascalCase entity}}(action) {
   try {
-     const response = yield call(axios.delete, "{{baseAPI}}/{{camelCase entityName}}/" + action.id);
+     const response = yield call(axios.delete, "{{baseAPI}}/{{camelCase entity}}/" + action.id);
      const result = yield response.json();
-     yield put({ type: DELETE_{{constantCase entityName}}_SUCCESS, payload: result})
+     yield put({ type: DELETE_{{constantCase entity}}_SUCCESS, payload: result})
    } catch (error) {
-     yield put({ type: DELETE_{{constantCase entityName}}_FAILURE, error})
+     yield put({ type: DELETE_{{constantCase entity}}_FAILURE, error})
    }
 }
 
-function* update{{pascalCase entityName}}(action) {
+function* update{{pascalCase entity}}(action) {
   try {
-     const response = yield call(axios.put, "{{baseAPI}}/{{camelCase entityName}}/" + action.id, action.payload);
+     const response = yield call(axios.put, "{{baseAPI}}/{{camelCase entity}}/" + action.id, action.payload);
      const result = yield response.json();
-     yield put({ type: UPDATE_{{constantCase entityName}}_SUCCESS, payload: result})
+     yield put({ type: UPDATE_{{constantCase entity}}_SUCCESS, payload: result})
    } catch (error) {
-     yield put({ type: UPDATE_{{constantCase entityName}}_FAILURE, error})
+     yield put({ type: UPDATE_{{constantCase entity}}_FAILURE, error})
    }
 }
 
-function* create{{pascalCase entityName}}(action) {
+function* create{{pascalCase entity}}(action) {
   try {
-     const response = yield call(axios.post, "{{baseAPI}}/{{camelCase entityName}}", action.payload);
+     const response = yield call(axios.post, "{{baseAPI}}/{{camelCase entity}}", action.payload);
      const result = yield response.json();
-     yield put({ type: CREATE_{{constantCase entityName}}_SUCCESS, payload: result})
+     yield put({ type: CREATE_{{constantCase entity}}_SUCCESS, payload: result})
    } catch (error) {
-     yield put({ type: CREATE_{{constantCase entityName}}_FAILURE, error})
+     yield put({ type: CREATE_{{constantCase entity}}_FAILURE, error})
    }
 }
 
-export default function* {{pascalCase entityName}}Saga() {
+export default function* {{pascalCase entity}}Saga() {
     yield all([
-      takeEvery(FETCH_{{constantCase entityName}}, fetch{{pascalCase entityName}}),
-      takeEvery(UPDATE_{{constantCase entityName}}, update{{pascalCase entityName}}),
-      takeEvery(DELETE_{{constantCase entityName}}, delete{{pascalCase entityName}}),
-      takeEvery(CREATE_{{constantCase entityName}}, create{{pascalCase entityName}})
+      takeEvery(FETCH_{{constantCase entity}}, fetch{{pascalCase entity}}),
+      takeEvery(UPDATE_{{constantCase entity}}, update{{pascalCase entity}}),
+      takeEvery(DELETE_{{constantCase entity}}, delete{{pascalCase entity}}),
+      takeEvery(CREATE_{{constantCase entity}}, create{{pascalCase entity}})
     ])
 }

@@ -4,35 +4,35 @@ module.exports = {
     DEFAULT_BASE_API: "http://localhost:3000",
     DEFAULT_TEMPLATE_FILE_MAP_INFO: {
         'action': {
-            parentFolderName: 'actions',
+            parentFolder: 'actions',
             extension: 'ActionCreator.js'
         },
         'saga': {
-            parentFolderName: 'sagas',
+            parentFolder: 'sagas',
             extension: 'Saga.js'
         },
         'sagas-index': {
-            parentFolderName: 'sagas',
+            parentFolder: 'sagas',
             extension: '.js'
         },
         'reducer': {
-            parentFolderName: 'reducers',
+            parentFolder: 'reducers',
             extension: 'Reducer.js'
         },
         'reducers-index': {
-            parentFolderName: 'reducers',
+            parentFolder: 'reducers',
             extension: '.js'
         },
         'entity-component': {
-            parentFolderName: 'components',
+            parentFolder: 'components',
             extension: '.js'
         },
         'entity-components-index': {
-            parentFolderName: 'components',
+            parentFolder: 'components',
             extension: '.js'
         },
         'container-component': {
-            parentFolderName: '',
+            parentFolder: '',
             extension: '.js'
         }
     },
@@ -53,5 +53,4 @@ module.exports = {
     ],
     DEFAULT_PROJECT_SOURCE_PATH: "src",
     DEFAULT_ROOT_CONTAINERS_PATH: "containers",
-    DEFAULT_PROJECT_TEMPLATES_PATH: "templates",
 }

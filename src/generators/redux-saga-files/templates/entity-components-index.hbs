@@ -1,3 +1,7 @@
-//IMPORTED_COMPONENTS
+{{#each entities}}
+import {{pascalCase entity}}Entity from './{{pascalCase entity}}';
+{{/each}}
 
-//EXPORTED_COMPONENTS
+{{#each entities}}
+export const {{pascalCase entity}} = {{pascalCase entity}}Entity;
+{{/each}}

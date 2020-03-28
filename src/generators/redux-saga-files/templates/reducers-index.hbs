@@ -1,6 +1,9 @@
-
-//IMPORTED_REDUCERS
+{{#each entities}}
+import {{camelCase this}}Reducer from './{{camelCase this}}Reducer';
+{{/each}}
 
 export default {
-    //EXPORTED_REDUCERS
+    {{#each entities}}
+    {{camelCase this}}: {{camelCase this}}Reducer,
+    {{/each}}
 }
